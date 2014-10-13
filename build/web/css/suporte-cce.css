@@ -1,0 +1,46 @@
+.body-uel {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-top: 70px;
+}
+
+.color-uel {
+    background-color: #67b168;
+}
+
+.jumbotron-header-uel {
+    margin-bottom: 2.5%
+}
+
+.form-uel {
+    margin: 0 auto;
+    width: 25%;
+}
+
+.btn-uel {
+    background-color: #67b168;
+    color: white;
+}
+
+.btn-uel:hover {
+    background-color: #449d44;
+    color: white;
+}
+
+.link-uel {
+    color: #67b168;
+}
+
+.link-uel:hover {
+    color: #449d44;
+    text-decoration: underline;
+}
+
+.table-uel {
+    margin: 0 auto;
+    width: 35%;
+}
+
+.nav-uel {
+    margin-bottom: 2.5%;
+}
