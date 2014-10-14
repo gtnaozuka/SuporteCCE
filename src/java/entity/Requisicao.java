@@ -21,7 +21,6 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Requisicao.findAll", query = "SELECT r FROM Requisicao r")})
 public class Requisicao implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -181,4 +180,5 @@ public class Requisicao implements Serializable {
     public String toString() {
         return "entity.Requisicao[ id=" + id + " ]";
     }
+    
 }

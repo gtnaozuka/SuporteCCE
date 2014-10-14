@@ -19,7 +19,6 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")})
 public class Pessoa implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,7 @@ public class Pessoa implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "matricula_chapa")
-    private int matriculaChapa;
+    private String matriculaChapa;
     @Basic(optional = false)
     @Column(name = "senha")
     private String senha;
@@ -43,8 +42,6 @@ public class Pessoa implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo")
     private int tipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "destino")
-    private List<Email> emailList;
     @OneToMany(mappedBy = "tecnicoId")
     private List<Requisicao> requisicaoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
@@ -57,7 +54,7 @@ public class Pessoa implements Serializable {
         this.id = id;
     }
 
-    public Pessoa(Integer id, int matriculaChapa, String senha, String nome, String email, int tipo) {
+    public Pessoa(Integer id, String matriculaChapa, String senha, String nome, String email, int tipo) {
         this.id = id;
         this.matriculaChapa = matriculaChapa;
         this.senha = senha;
@@ -74,11 +71,11 @@ public class Pessoa implements Serializable {
         this.id = id;
     }
 
-    public int getMatriculaChapa() {
+    public String getMatriculaChapa() {
         return matriculaChapa;
     }
 
-    public void setMatriculaChapa(int matriculaChapa) {
+    public void setMatriculaChapa(String matriculaChapa) {
         this.matriculaChapa = matriculaChapa;
     }
 
@@ -122,14 +119,6 @@ public class Pessoa implements Serializable {
         this.tipo = tipo;
     }
 
-    public List<Email> getEmailList() {
-        return emailList;
-    }
-
-    public void setEmailList(List<Email> emailList) {
-        this.emailList = emailList;
-    }
-
     public List<Requisicao> getRequisicaoList() {
         return requisicaoList;
     }
@@ -166,4 +155,5 @@ public class Pessoa implements Serializable {
     public String toString() {
         return "entity.Pessoa[ id=" + id + " ]";
     }
+    
 }
