@@ -7,10 +7,10 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:6543/suporteCCE"/>
-            <property name="hibernate.connection.password" value="gtn123"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-54-83-204-104.compute-1.amazonaws.com:5432/d4plci7kotim4p"/>
+            <property name="hibernate.connection.password" value="IvHGFQGkmX8W7ccmNUzgLngPXD"/>
             <property name="hibernate.connection.driver" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.username" value="ioajcpeuewpujs"/>
         </properties>
     </persistence-unit>
 </persistence>
