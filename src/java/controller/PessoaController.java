@@ -25,9 +25,9 @@ import javax.servlet.http.HttpSession;
                                     "/pessoa/delete"})
 public class PessoaController extends HttpServlet {
 
-    private static final int USUARIO = 1;
-    private static final int TECNICO = 2;
-    private static final int ADMINISTRADOR = 3;
+    public static final int USUARIO = 1;
+    public static final int TECNICO = 2;
+    public static final int ADMINISTRADOR = 3;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

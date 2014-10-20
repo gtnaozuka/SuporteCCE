@@ -1,6 +1,9 @@
 package controller;
 
+import dao.PessoaDAO;
+import entity.Pessoa;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,9 @@ public class RelatorioController extends HttpServlet {
         RequestDispatcher dispatcher;
         switch (request.getServletPath()) {
             case "/relatorio":
-//                request.setAttribute("tecnicosList", tecnicosList);
+                PessoaDAO pdao = new PessoaDAO();
+                List<Pessoa> tecnicosList = pdao.listByType(PessoaController.TECNICO);
+                request.setAttribute("tecnicosList", tecnicosList);
                 dispatcher = request.getRequestDispatcher("/view/relatorio/index.jsp");
                 break;
         }
