@@ -1,5 +1,7 @@
 package controller;
 
+import dao.PessoaDAO;
+import dao.RequisicaoDAO;
 import entity.Pessoa;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -11,67 +13,79 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PessoaController", urlPatterns = {
-                                    "/",
-                                    "/pessoa/forgot_password",
-                                    "/pessoa/update_password",
-                                    "/usuario/create",
-                                    "/usuario/update",
-                                    "/tecnico/create",
-                                    "/tecnico/update",
-                                    "/tecnico/adm_delete",
-                                    "/tecnico/adm_update",
-                                    "/pessoa/delete"})
+    "",
+    "/pessoa/forgot_password",
+    "/pessoa/update_password",
+    "/usuario/create",
+    "/usuario/update",
+    "/tecnico/create",
+    "/tecnico/update",
+    "/tecnico/adm_delete",
+    "/tecnico/adm_update",
+    "/pessoa/delete"})
 public class PessoaController extends HttpServlet {
 
     private static final int USUARIO = 1;
     private static final int TECNICO = 2;
     private static final int ADMINISTRADOR = 3;
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = null;
+        RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
         switch (request.getServletPath()) {
-            case "/":
-                if (request.getSession(false) == null) {
+            case "":
+                if (session == null) {
                     dispatcher = request.getRequestDispatcher("/index.jsp");
+                    dispatcher.forward(request, response);
                 } else {
                     Pessoa p = (Pessoa) session.getAttribute("pessoa");
+                    RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
+                    PessoaDAO pessoaDAO = new PessoaDAO();
                     if (p.getTipo() == USUARIO) {
-//                        request.setAttribute("pendentesList", pendentesList);
-//                        request.setAttribute("execucaoList", execucaoList);
-//                        request.setAttribute("esperaList", esperaList);
-//                        request.setAttribute("concluidosList", concluidoList);
+                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p.getId()));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p.getId()));
+                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p.getId()));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p.getId()));
                         dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
+                        dispatcher.forward(request, response);
                     } else if (p.getTipo() == TECNICO) {
-//                        request.setAttribute("pendentesList", pendentesList);
-//                        request.setAttribute("execucaoList", execucaoList);
-//                        request.setAttribute("esperaList", esperaList);
-//                        request.setAttribute("concluidosList", concluidoList);
+                        request.setAttribute("pendentesList", requisicaoDAO.listByState(RequisicaoController.PENDENTE));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByState(RequisicaoController.EXECUCAO));
+                        request.setAttribute("esperaList", requisicaoDAO.listByState(RequisicaoController.ESPERA));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByState(RequisicaoController.CONCLUIDO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
+                        dispatcher.forward(request, response);
                     } else if (p.getTipo() == ADMINISTRADOR) {
-//                        request.setAttribute("tecnicosList", tecnicosList);
+                        request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
+                        dispatcher.forward(request, response);
                     }
                 }
                 break;
             case "/pessoa/forgot_password":
                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/pessoa/update_password":
                 dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/usuario/create":
                 dispatcher = request.getRequestDispatcher("/view/usuario/create.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/usuario/update":
                 dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/tecnico/create":
                 dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/tecnico/update":
                 dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
+                dispatcher.forward(request, response);
                 break;
             case "/tecnico/adm_delete":
                 //Modal nao criado ainda...
@@ -83,34 +97,42 @@ public class PessoaController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher;
         switch (request.getServletPath()) {
-            case "/":
-                request.getParameter("matricula_chapa");
-                request.getParameter("senha");
-			//Valida os roles.
-
-                //Se a validacao deu certo
-//                Pessoa p = //bagulho do dao
+            case "":
                 Pessoa p = new Pessoa();
-                if (p.getTipo() == USUARIO) {
-//                    request.setAttribute("pendentesList", pendentesList);
-//                    request.setAttribute("execucaoList", execucaoList);
-//                    request.setAttribute("esperaList", esperaList);
-//                    request.setAttribute("concluidosList", concluidoList);
-                    dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
-                } else if (p.getTipo() == TECNICO) {
-//                    request.setAttribute("pendentesList", pendentesList);
-//                    request.setAttribute("execucaoList", execucaoList);
-//                    request.setAttribute("esperaList", esperaList);
-//                    request.setAttribute("concluidosList", concluidoList);
-                    dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
-                } else if (p.getTipo() == ADMINISTRADOR) {
-//                    request.setAttribute("tecnicosList", tecnicosList);
-                    dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
-                }
+                p.setMatriculaChapa(request.getParameter("matricula_chapa"));
+                p.setSenha(request.getParameter("senha"));
 
-                //Se a validacao deu errado
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/index.jsp");
+                PessoaDAO pessoaDAO = new PessoaDAO();
+                try {
+                    p = pessoaDAO.authenticate(p);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("pessoa", p);
+
+                    RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
+                    if (p.getTipo() == USUARIO) {
+                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p.getId()));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p.getId()));
+                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p.getId()));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p.getId()));
+                        dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
+                        dispatcher.forward(request, response);
+                    } else if (p.getTipo() == TECNICO) {
+                        request.setAttribute("pendentesList", requisicaoDAO.listByState(RequisicaoController.PENDENTE));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByState(RequisicaoController.EXECUCAO));
+                        request.setAttribute("esperaList", requisicaoDAO.listByState(RequisicaoController.ESPERA));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByState(RequisicaoController.CONCLUIDO));
+                        dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
+                        dispatcher.forward(request, response);
+                    } else if (p.getTipo() == ADMINISTRADOR) {
+                        request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                        dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                } catch (SecurityException ex) {
+                    request.setAttribute("erro", ex.getMessage());
+                    dispatcher = request.getRequestDispatcher("/index.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/tecnico/adm_update":
                 //Modal nao criado ainda...
@@ -210,7 +232,7 @@ public class PessoaController extends HttpServlet {
                 request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
                 dispatcher = request.getRequestDispatcher("/index.jsp");
 
-			//Se a validacao deu errado
+                //Se a validacao deu errado
                 //Pensar depois...
                 break;
         }
