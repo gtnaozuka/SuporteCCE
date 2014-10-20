@@ -17,10 +17,10 @@ public class RequisicaoDAO {
         em = JPAUtil.initConnection();
     }
     
-    public void save(Requisicao requisicao) {
-        em.getTransaction().begin();
-        em.merge(requisicao);
-        em.getTransaction().commit();
+    public Requisicao save(Requisicao requisicao) {
+        //em.getTransaction().begin();
+        return em.merge(requisicao);
+        //em.getTransaction().commit();
     }
     
     public Requisicao read(Integer id) {

@@ -20,10 +20,10 @@ public class PessoaDAO {
         em = JPAUtil.initConnection();
     }
 
-    public void save(Pessoa pessoa) {
-        em.getTransaction().begin();
-        em.merge(pessoa);
-        em.getTransaction().commit();
+    public Pessoa save(Pessoa pessoa) {
+        //em.getTransaction().begin();
+        return em.merge(pessoa);
+        //em.getTransaction().commit();
     }
 
     public Pessoa read(Integer id) {
