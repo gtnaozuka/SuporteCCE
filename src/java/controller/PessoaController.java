@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PessoaController", urlPatterns = {
-                                    "/",
+                                    //"/",
                                     "/pessoa/forgot_password",
                                     "/pessoa/update_password",
                                     "/usuario/create",
