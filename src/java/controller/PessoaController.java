@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PessoaController", urlPatterns = {
-    "",
-    "/pessoa/forgot_password",
-    "/pessoa/update_password",
-    "/usuario/create",
-    "/usuario/update",
-    "/tecnico/create",
-    "/tecnico/update",
-    "/tecnico/adm_delete",
-    "/tecnico/adm_update",
-    "/pessoa/delete"})
+                                    //"/",
+                                    "/pessoa/forgot_password",
+                                    "/pessoa/update_password",
+                                    "/usuario/create",
+                                    "/usuario/update",
+                                    "/tecnico/create",
+                                    "/tecnico/update",
+                                    "/tecnico/adm_delete",
+                                    "/tecnico/adm_update",
+                                    "/pessoa/delete"})
 public class PessoaController extends HttpServlet {
 
     private static final int USUARIO = 1;
