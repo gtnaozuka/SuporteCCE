@@ -22,7 +22,7 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/pessoa/create" method="POST">
+                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/usuario/create" method="POST">
                     <div class="form-group">
                         <label for="inputMatricula">Matrícula</label>
                         <input type="text" class="form-control" id="inputMatricula" placeholder="Insira seu número de matrícula" name="matricula" required="true" maxlength="20" pattern="[0-9]{6,20}">

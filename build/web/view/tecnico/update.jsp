@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<c:if test="${empty sessionScope.pessoa}">
+<c:if test="${empty sessionScope.pessoa}">
     <c:redirect context="${pageContext.servletContext.contextPath}" url="/"/>
-</c:if>--%>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,14 +32,14 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/pessoa/update" method="POST">
+                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/tecnico/update" method="POST">
                     <div class="form-group">
                         <label for="inputChapa">Chapa funcional</label>
                         <input type="text" class="form-control" id="inputChapa" placeholder="Insira seu número de chapa funcional" name="chapa" required="true" maxlength="20" pattern="[0-9]{6,20}" value="${sessionScope.pessoa.matricula_chapa}">
                         <span class="help-block text-right">Mínimo 6 dígitos.</span>
                     </div>
                     <div class="form-group">
-                        <label for="inputSenha">Senha: <a class="btn btn-uel btn-xs" href="#">Alterar senha</a></label>
+                        <label for="inputSenha">Senha: <a class="btn btn-uel btn-xs" href="${pageContext.servletContext.contextPath}/pessoa/update_password">Alterar senha</a></label>
                     </div>
                     <div class="form-group">
                         <label for="inputNome">Nome</label>

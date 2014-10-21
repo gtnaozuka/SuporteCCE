@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<c:if test="${empty sessionScope.pessoa}">
+<c:if test="${empty sessionScope.pessoa}">
     <c:redirect context="${pageContext.servletContext.contextPath}" url="/"/>
-</c:if>--%>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
     <head>

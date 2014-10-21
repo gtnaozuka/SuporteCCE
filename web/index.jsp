@@ -28,20 +28,20 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-horizontal form-uel" role="form" action="${pageContext.servletContext.contextPath}/login" method="POST">
+                <form class="form-horizontal form-uel" role="form" action="${pageContext.servletContext.contextPath}/" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" id="inputMatriculaChapa" placeholder="Matrícula/Chapa funcional" name="matricula_chapa" required="true" maxlength="20">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="inputSenha" placeholder="Senha" name="senha" required="true" maxlength="20">
                         <div class="text-right" style="margin-bottom: 0">
-                            <a class="btn link-uel" href="#">Esqueceu a senha?</a>
+                            <a class="btn link-uel" href="${pageContext.servletContext.contextPath}/pessoa/forgot_password">Esqueceu a senha?</a>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="text-center">
                             <button type="submit" class="btn btn-uel">Login</button>
-                            <a class="btn link-uel" href="${pageContext.servletContext.contextPath}/pessoa/create">Cadastrar</a>
+                            <a class="btn link-uel" href="${pageContext.servletContext.contextPath}/usuario/create">Cadastrar</a>
                         </div>
                     </div>
                 </form>

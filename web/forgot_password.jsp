@@ -28,7 +28,7 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-uel" role="form" action="#" method="POST">
+                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/pessoa/forgot_password" method="POST">
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
                         <input type="text" class="form-control" id="inputEmail" placeholder="Insira seu e-mail" name="email" required="true" maxlength="20">

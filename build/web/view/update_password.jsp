@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<c:if test="${empty sessionScope.pessoa}">
+<c:if test="${empty sessionScope.pessoa}">
     <c:redirect context="${pageContext.servletContext.contextPath}" url="/"/>
-</c:if>--%>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,7 +32,7 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-uel" role="form" action="#" method="POST">
+                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/pessoa/update_password" method="POST">
                     <div class="form-group">
                         <label for="inputSenhaAtual">Senha atual</label>
                         <input type="password" class="form-control" id="inputSenhaAtual" placeholder="Insira sua senha atual" name="senha_atual" required="true" maxlength="20">
