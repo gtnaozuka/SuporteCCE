@@ -5,6 +5,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import util.JPAUtil;
@@ -20,10 +22,11 @@ public class PessoaDAO {
         em = JPAUtil.initConnection();
     }
 
-    public Pessoa save(Pessoa pessoa) {
-        //em.getTransaction().begin();
+    public Pessoa save(Pessoa pessoa, boolean isMD5) {
+        if (!isMD5) {
+            pessoa.setSenha(stringToMD5(pessoa.getSenha()));
+        }
         return em.merge(pessoa);
-        //em.getTransaction().commit();
     }
 
     public Pessoa read(Integer id) {
@@ -31,9 +34,7 @@ public class PessoaDAO {
     }
 
     public void delete(Pessoa pessoa) {
-        em.getTransaction().begin();
         em.remove(read(pessoa.getId()));
-        em.getTransaction().commit();
     }
 
     public List<Pessoa> all() {
@@ -47,26 +48,40 @@ public class PessoaDAO {
         return q.getResultList();
     }
 
-    public Pessoa authenticate(Pessoa p) throws SecurityException {
+    public Pessoa authenticate(Pessoa pessoa) throws SecurityException {
         Query q = em.createQuery(authenticateQuery);
-        q.setParameter("matricula_chapa", p.getMatriculaChapa());
+        q.setParameter("matricula_chapa", pessoa.getMatriculaChapa());
         Pessoa p_tupla = (Pessoa) q.getSingleResult();
 
         if (p_tupla != null) {
-            MessageDigest md5;
-            try {
-                md5 = MessageDigest.getInstance("MD5");
-                md5.update(p.getSenha().getBytes());
-                if (!new BigInteger(1, md5.digest()).toString(16).equals(p_tupla.getSenha())) {
-                    throw new SecurityException();
-                }
-            } catch (NoSuchAlgorithmException ex) {
-                System.err.println(ex.getMessage());
-            }
+            verifyPassword(pessoa.getSenha(), p_tupla.getSenha());
         } else {
-            throw new SecurityException();
+            throw new SecurityException("Matrícula ou chapa incorreta.");
         }
 
         return p_tupla;
+    }
+
+    public void verifyPassword(Pessoa pessoa) throws SecurityException {
+        Pessoa p_tupla = em.find(Pessoa.class, pessoa.getId());
+        verifyPassword(pessoa.getSenha(), p_tupla.getSenha());
+    }
+
+    private void verifyPassword(String senha_form, String senha_tupla) throws SecurityException {
+        if (!stringToMD5(senha_form).equals(senha_tupla)) {
+            throw new SecurityException("Senha incorreta.");
+        }
+    }
+
+    private String stringToMD5(String senha) {
+        MessageDigest md5;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            md5.update(senha.getBytes());
+            return new BigInteger(1, md5.digest()).toString(16);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

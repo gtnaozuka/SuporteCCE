@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PessoaController", urlPatterns = {
-                                    //"/",
-                                    "/pessoa/forgot_password",
-                                    "/pessoa/update_password",
-                                    "/usuario/create",
-                                    "/usuario/update",
-                                    "/tecnico/create",
-                                    "/tecnico/update",
-                                    "/tecnico/adm_delete",
-                                    "/tecnico/adm_update",
-                                    "/pessoa/delete"})
+    "",
+    "/pessoa/forgot_password",
+    "/pessoa/update_password",
+    "/usuario/create",
+    "/usuario/update",
+    "/tecnico/create",
+    "/tecnico/update",
+    "/tecnico/adm_delete",
+    "/tecnico/adm_update",
+    "/pessoa/delete"})
 public class PessoaController extends HttpServlet {
 
     public static final int USUARIO = 1;
@@ -90,25 +90,29 @@ public class PessoaController extends HttpServlet {
             case "/tecnico/adm_delete":
                 //Modal nao criado ainda...
                 break;
+            case "/logout":
+                setSessionPerson(request, null);
+                dispatcher = request.getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
+                break;
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher;
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
         switch (request.getServletPath()) {
             case "":
                 Pessoa p = new Pessoa();
                 p.setMatriculaChapa(request.getParameter("matricula_chapa"));
                 p.setSenha(request.getParameter("senha"));
 
-                PessoaDAO pessoaDAO = new PessoaDAO();
                 try {
                     p = pessoaDAO.authenticate(p);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("pessoa", p);
+                    setSessionPerson(request, p);
 
-                    RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
                     if (p.getTipo() == USUARIO) {
                         request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p.getId()));
                         request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p.getId()));
@@ -150,91 +154,139 @@ public class PessoaController extends HttpServlet {
                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                 break;
             case "/pessoa/update_password":
-                request.getParameter("senha_atual");
-                request.getParameter("nova_senha");
-                request.getParameter("confirm_senha");
-			//Valida os roles.
+                p = getSessionPerson(request);
+                p.setSenha(request.getParameter("senha_atual"));
 
-                //Se a validacao deu certo.
-                request.setAttribute("sucesso", "Senha alterada com sucesso!");
-                dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
-
-                //Se a vlidacao deu errado.
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                try {
+                    pessoaDAO.verifyPassword(p);
+                    if (request.getParameter("nova_senha").equals(request.getParameter("confirm_senha"))) {
+                        p.setSenha(request.getParameter("nova_senha"));
+                        p = pessoaDAO.save(p, false);
+                        if (p != null) {
+                            setSessionPerson(request, p);
+                            request.setAttribute("sucesso", "Senha alterada com sucesso!");
+                            dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                            dispatcher.forward(request, response);
+                        } else {
+                            request.setAttribute("erro", "Erro ao salvar.");
+                            dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                            dispatcher.forward(request, response);
+                        }
+                    } else {
+                        request.setAttribute("erro", "Nova senha e confirmação de senha não coincidem.");
+                        dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                } catch (SecurityException ex) {
+                    request.setAttribute("erro", ex.getMessage());
+                    dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/usuario/create":
-                request.getParameter("matricula");
-                request.getParameter("senha");
-                request.getParameter("nome");
-                request.getParameter("departamento");
-                request.getParameter("email");
-			//Valida os roles.
+                p = new Pessoa();
+                p.setMatriculaChapa(request.getParameter("matricula"));
+                p.setSenha(request.getParameter("senha"));
+                p.setNome(request.getParameter("nome"));
+                p.setDepartamento(request.getParameter("departamento"));
+                p.setEmail(request.getParameter("email"));
+                p.setTipo(USUARIO);
 
-                //Se a validacao deu certo
-                dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
-
-                //Se a validacao deu errado
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/view/usuario/create.jsp");
+                p = pessoaDAO.save(p, false);
+                if (p != null) {
+                    setSessionPerson(request, p);
+                    dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    dispatcher = request.getRequestDispatcher("/view/usuario/create.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/usuario/update":
-                request.getParameter("matricula");
-                request.getParameter("nome");
-                request.getParameter("departamento");
-                request.getParameter("email");
-			//Valida os roles.
+                p = getSessionPerson(request);
+                p.setMatriculaChapa(request.getParameter("matricula"));
+                p.setNome(request.getParameter("nome"));
+                p.setDepartamento(request.getParameter("departamento"));
+                p.setEmail(request.getParameter("email"));
 
-                //Se a validacao deu certo
-                request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
-                dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
-
-                //Se a validacao deu errado
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
+                p = pessoaDAO.save(p, true);
+                if (p != null) {
+                    setSessionPerson(request, p);
+                    request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/tecnico/create":
-                request.getParameter("chapa");
-                request.getParameter("senha");
-                request.getParameter("nome");
-                request.getParameter("departamento");
-                request.getParameter("email");
-			//Valida os roles.
+                p = new Pessoa();
+                p.setMatriculaChapa(request.getParameter("chapa"));
+                p.setSenha(request.getParameter("senha"));
+                p.setNome(request.getParameter("nome"));
+                p.setDepartamento(request.getParameter("departamento"));
+                p.setEmail(request.getParameter("email"));
+                p.setTipo(TECNICO);
 
-                //Se a validacao deu certo.
-                request.setAttribute("sucesso", "Cadastro efetuado com sucesso!");
-                dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
-
-                //Se a validacao deu errado
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
+                p = pessoaDAO.save(p, false);
+                if (p != null) {
+                    request.setAttribute("sucesso", "Cadastro efetuado com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/tecnico/update":
-                request.getParameter("chapa");
-                request.getParameter("nome");
-                request.getParameter("departamento");
-                request.getParameter("email");
-			//Valida os roles.
+                p = getSessionPerson(request);
+                p.setMatriculaChapa(request.getParameter("chapa"));
+                p.setNome(request.getParameter("nome"));
+                p.setDepartamento(request.getParameter("departamento"));
+                p.setEmail(request.getParameter("email"));
 
-                //Se a validacao deu certo.
-                request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
-                dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
-
-                //Se a validacao deu errado
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
+                p = pessoaDAO.save(p, true);
+                if (p != null) {
+                    setSessionPerson(request, p);
+                    request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/pessoa/delete":
-                request.getParameter("senha_atual");
-			//Valida os roles.
+                p = getSessionPerson(request);
+                p.setSenha(request.getParameter("senha_atual"));
 
-                //Se a validacao deu certo
-                request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
-                dispatcher = request.getRequestDispatcher("/index.jsp");
+                try {
+                    pessoaDAO.verifyPassword(p);
+                    pessoaDAO.delete(p);
 
-                //Se a validacao deu errado
-                //Pensar depois...
+                    setSessionPerson(request, null);
+                    request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/index.jsp");
+                    dispatcher.forward(request, response);
+                } catch (SecurityException ex) {
+                    //Pensar depois...
+                }
                 break;
         }
+    }
+
+    public static Pessoa getSessionPerson(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return (Pessoa) session.getAttribute("pessoa");
+    }
+
+    private void setSessionPerson(HttpServletRequest request, Pessoa pessoa) {
+        HttpSession session = request.getSession();
+        session.setAttribute("pessoa", pessoa);
     }
 }

@@ -23,6 +23,7 @@ public class RelatorioController extends HttpServlet {
                 List<Pessoa> tecnicosList = pdao.listByType(PessoaController.TECNICO);
                 request.setAttribute("tecnicosList", tecnicosList);
                 dispatcher = request.getRequestDispatcher("/view/relatorio/index.jsp");
+                dispatcher.forward(request, response);
                 break;
         }
     }
@@ -34,7 +35,7 @@ public class RelatorioController extends HttpServlet {
                 request.getParameter("tecnico");
                 request.getParameter("data_inicio");
                 request.getParameter("data_termino");
-			//Gerar relatorio
+                //Gerar relatorio
                 //Pensar depois... Provavelmente enviar os dados gráficos via json.
                 break;
         }
