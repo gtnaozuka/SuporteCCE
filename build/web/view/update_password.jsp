@@ -14,8 +14,19 @@
         <link href="${pageContext.servletContext.contextPath}/css/suporte-cce.css" rel="stylesheet">
     </head>
     <body class="body-uel">
-        <%--<%@include file="/view/include/deleteAccount.jsp" %>        
-        <%@include file="/view/include/navbar.jsp"%>--%>
+        <c:choose>
+            <c:when test="${sessionScope.pessoa.tipo == 1}">
+                <%@include file="/view/include/deleteAccount.jsp" %>        
+                <%@include file="/view/include/navbarUsuario.jsp"%>
+            </c:when>
+            <c:when test="${sessionScope.pessoa.tipo == 2}">
+                <%@include file="/view/include/deleteAccount.jsp" %>        
+                <%@include file="/view/include/navbarTecnico.jsp"%>
+            </c:when>
+            <c:when test="${sessionScope.pessoa.tipo == 3}">      
+                <%@include file="/view/include/navbarAdmin.jsp"%>
+            </c:when>
+        </c:choose>
 
         <div class="container-fluid">
             <div class="jumbotron">

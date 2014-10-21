@@ -14,8 +14,8 @@
         <link href="${pageContext.servletContext.contextPath}/css/suporte-cce.css" rel="stylesheet">
     </head>
     <body class="body-uel">
-        <%--<%@include file="/view/include/deleteAccount.jsp" %>
-        <%@include file="/view/include/navbar.jsp" %>--%>
+        <%@include file="/view/include/deleteAccount.jsp" %>
+        <%@include file="/view/include/navbarUsuario.jsp" %>
 
         <div class="container-fluid">
             <div class="jumbotron">
