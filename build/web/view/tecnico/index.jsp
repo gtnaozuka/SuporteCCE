@@ -35,14 +35,14 @@
                                 <td><c:out value="${t.nome}"/></td>
                                 <td><c:out value="${t.email}"/></td>
                                 <td>
-                                    <a href="#">
+                                    <a class="btn_tecnicoAdmUpdate" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/tecnico/adm_update?tecnico_id=${t.id}">
                                         <button type="button" class="btn btn-default btn-small">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="tecnicos" data-toggle="modal" data-href="#">
+                                    <a class="btn_tecnicoAdmDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/tecnico/adm_delete?tecnico_id=${t.id}">
                                         <button type="button" class="btn btn-default btn-small">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>

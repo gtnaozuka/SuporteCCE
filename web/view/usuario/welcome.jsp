@@ -44,6 +44,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -66,6 +73,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -88,6 +102,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -110,6 +131,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

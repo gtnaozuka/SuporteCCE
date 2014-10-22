@@ -90,6 +90,10 @@ public class PessoaController extends HttpServlet {
             case "/tecnico/adm_delete":
                 //Modal nao criado ainda...
                 break;
+            case "/tecnico/adm_update":
+                PessoaDAO pessoaDAO = new PessoaDAO();
+                Pessoa p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
+                
             case "/logout":
                 setSessionPerson(request, null);
                 dispatcher = request.getRequestDispatcher("/index.jsp");
