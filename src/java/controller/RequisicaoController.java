@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.RequisicaoDAO;
 import entity.Pessoa;
 import entity.Requisicao;
@@ -32,17 +33,26 @@ public class RequisicaoController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
             case "/requisicao/delete":
-                //Modal nao criado ainda...
-
                 RequisicaoDAO rdao = new RequisicaoDAO();
                 Requisicao r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
                 Pessoa p = PessoaController.getSessionPerson(request);
                 if (p.equals(r.getUsuarioId())) {
                     rdao.delete(r);
-                    response.getOutputStream().println("Requisição apagada com sucesso.");
+                    request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
+                    dispatcher.forward(request, response);
                 } else {
-                    response.getOutputStream().println("Falha ao apagar requisição.");
+                    request.setAttribute("erro", "Falha ao apagar requisição!");
+                    dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
+                    dispatcher.forward(request, response);
                 }
+                break;
+            case "/requisicao/accept":
+                rdao = new RequisicaoDAO();
+                r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
+
+                Gson gson = new Gson();
+                response.getWriter().write(gson.toJson(r));
                 break;
         }
     }
@@ -74,9 +84,7 @@ public class RequisicaoController extends HttpServlet {
 
                 break;
             case "/requisicao/accept":
-                //Modal nao criado ainda...
-                
-                r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
+                r = rdao.read(Integer.parseInt(request.getParameter("id")));
                 r.setPrioridade(Integer.parseInt(request.getParameter("prioridade")));
                 r.setObservacao(request.getParameter("observacao"));
                 r.setTecnicoId(PessoaController.getSessionPerson(request));

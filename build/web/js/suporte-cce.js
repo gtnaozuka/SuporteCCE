@@ -29,7 +29,7 @@ $(document).ready(function () {
     });
     
     $('.btn_requisicaoAccept').click(function() {
-        $,get($(this).data('href'), function(data) {
+        $.get($(this).data('href'), function(data) {
             var requisicao = JSON.parse(data);
             $('#reqRemetente').html(requisicao.usuario_id.matricula_chapa);
             $('#reqTipo').html(requisicao.tipo);
@@ -37,6 +37,7 @@ $(document).ready(function () {
             $('#reqFuel').html(requisicao.fuel);
             $('#reqDataCriacao').html(requisicao.data_criacao);
             $('#reqDescricao').html(requisicao.descricao);
+            $('#inputId').val(requisicao.id);
             $('#requisicaoAccept').modal('show');
         });
     });

@@ -32,11 +32,11 @@ public class RelatorioController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
             case "/relatorio":
-                request.getParameter("tecnico");
-                request.getParameter("data_inicio");
-                request.getParameter("data_termino");
-                //Gerar relatorio
-                //Pensar depois... Provavelmente enviar os dados gráficos via json.
+                /*request.getParameter("tecnico");
+                 request.getParameter("data_inicio");
+                 request.getParameter("data_termino");
+                 //Gerar relatorio
+                 //Pensar depois... Provavelmente enviar os dados gráficos via json.*/
                 break;
         }
     }

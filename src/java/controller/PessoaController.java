@@ -89,12 +89,17 @@ public class PessoaController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
             case "/tecnico/adm_delete":
-                //Modal nao criado ainda...
-                break;
-            case "/tecnico/adm_update":
                 PessoaDAO pessoaDAO = new PessoaDAO();
                 Pessoa p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
-                
+                pessoaDAO.delete(p);
+                request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
+                dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "/tecnico/adm_update":
+                pessoaDAO = new PessoaDAO();
+                p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
+
                 Gson gson = new Gson();
                 response.getWriter().write(gson.toJson(p));
                 break;
@@ -147,19 +152,34 @@ public class PessoaController extends HttpServlet {
                 }
                 break;
             case "/tecnico/adm_update":
-                //Modal nao criado ainda...
+                p = pessoaDAO.read(Integer.parseInt(request.getParameter("id")));
+                p.setMatriculaChapa(request.getParameter("chapa"));
+                p.setSenha(request.getParameter("senha"));
+                p.setNome(request.getParameter("nome"));
+                p.setDepartamento(request.getParameter("departamento"));
+                p.setEmail(request.getParameter("email"));
+
+                if (pessoaDAO.save(p, false) != null) {
+                    request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
+                    dispatcher.forward(request, response);
+                }
                 break;
             case "/pessoa/forgot_password":
-                request.getParameter("email");
-			//Valida os roles.
+                /*request.getParameter("email");
+                 //Valida os roles.
 
-                //Se o email existe
-                request.setAttribute("sucesso", "Email enviado com sucesso!");
-                dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                 //Se o email existe
+                 request.setAttribute("sucesso", "Email enviado com sucesso!");
+                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
 
-                //Se o email nao existe
-//                request.setAttribute("erro", SQLException.getMessage());
-                dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                 //Se o email nao existe
+                 request.setAttribute("erro", SQLException.getMessage());
+                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");*/
                 break;
             case "/pessoa/update_password":
                 p = getSessionPerson(request);

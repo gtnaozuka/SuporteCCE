@@ -19,6 +19,18 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h2 class="text-center">Edição/Exclusão de técnicos</h2>
+                <c:if test="${not empty sucesso}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${sucesso}"/></strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty erro}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${erro}"/></strong>
+                    </div>
+                </c:if>
                 <table class="table table-striped table-hover table-uel">
                     <thead>
                         <tr>

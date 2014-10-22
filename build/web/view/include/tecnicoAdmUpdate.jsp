@@ -16,7 +16,9 @@
                         <span class="help-block text-right">Mínimo 6 dígitos.</span>
                     </div>
                     <div class="form-group">
-                        <label for="inputSenha">Senha: <a class="btn btn-uel btn-xs" href="${pageContext.servletContext.contextPath}/pessoa/update_password">Alterar senha</a></label>
+                        <label for="inputSenha">Senha</label>
+                        <input type="password" class="form-control" id="inputSenha" placeholder="Insira sua senha" name="senha" required="true" maxlength="20" pattern=".{6,20}">
+                        <span class="help-block text-right">Mínimo 6 caracteres.</span>
                     </div>
                     <div class="form-group">
                         <label for="inputNome">Nome</label>

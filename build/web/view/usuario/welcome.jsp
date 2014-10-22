@@ -20,6 +20,18 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h2 class="text-center">Requisições</h2>
+                <c:if test="${not empty sucesso}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${sucesso}"/></strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty erro}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${erro}"/></strong>
+                    </div>
+                </c:if>
                 <ul class="nav nav-tabs nav-uel" role="tablist" id="tabs">
                     <li id="tabPendentes" class='active'><a href="#Pendentes" role="tab" data-toggle="tab">Pendentes</a></li>
                     <li id="tabExecucao"><a href="#Execucao" role="tab" data-toggle="tab">Em execução</a></li>
