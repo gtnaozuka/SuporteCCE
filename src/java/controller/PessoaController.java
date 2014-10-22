@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.PessoaDAO;
 import dao.RequisicaoDAO;
 import entity.Pessoa;
@@ -94,6 +95,9 @@ public class PessoaController extends HttpServlet {
                 PessoaDAO pessoaDAO = new PessoaDAO();
                 Pessoa p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
                 
+                Gson gson = new Gson();
+                response.getWriter().write(gson.toJson(p));
+                break;
             case "/logout":
                 setSessionPerson(request, null);
                 dispatcher = request.getRequestDispatcher("/index.jsp");

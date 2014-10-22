@@ -70,6 +70,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoAccept" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/accept?requisicao_id=${t.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

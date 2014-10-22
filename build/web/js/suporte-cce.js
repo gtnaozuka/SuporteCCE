@@ -27,4 +27,17 @@ $(document).ready(function () {
         $('#a_requisicaoDelete').attr('href'. $(this).data('href'));
         $('#requisicaoDelete').modal('show');
     });
+    
+    $('.btn_requisicaoAccept').click(function() {
+        $,get($(this).data('href'), function(data) {
+            var requisicao = JSON.parse(data);
+            $('#reqRemetente').html(requisicao.usuario_id.matricula_chapa);
+            $('#reqTipo').html(requisicao.tipo);
+            $('#reqLocalizacao').html(requisicao.localizacao);
+            $('#reqFuel').html(requisicao.fuel);
+            $('#reqDataCriacao').html(requisicao.data_criacao);
+            $('#reqDescricao').html(requisicao.descricao);
+            $('#requisicaoAccept').modal('show');
+        });
+    });
 });
