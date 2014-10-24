@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 import dao.RequisicaoDAO;
+import entity.Email;
 import entity.Pessoa;
 import entity.Requisicao;
 import java.io.IOException;
@@ -37,7 +38,20 @@ public class RequisicaoController extends HttpServlet {
                 Requisicao r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
                 Pessoa p = PessoaController.getSessionPerson(request);
                 if (p.equals(r.getUsuarioId())) {
+                    Pessoa tecnicoResponsavel = r.getTecnicoId();
                     rdao.delete(r);
+                    /* -------------------------------------------------------------------- */
+                    /* Envio de email */
+                    if (tecnicoResponsavel != null) {
+                        Email email = new Email();
+                        email.setSubject("Cancelamento de requisição");
+                        email.setTo(tecnicoResponsavel.getEmail());
+                        String conteudo = "A requisição " + "\"" + r.getDescricao() + "\", feita por " + r.getUsuarioId().getNome()
+                                + " foi cancelada pelo usuário.\n\nAtenção: e-mail gerado automaticamente, não é necessária resposta.";
+                        email.setContent(conteudo);
+                        Email.sendEmail(email);
+                    }
+                    /* -------------------------------------------------------------------- */
                     request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                     dispatcher.forward(request, response);
@@ -90,12 +104,20 @@ public class RequisicaoController extends HttpServlet {
                 r.setTecnicoId(PessoaController.getSessionPerson(request));
                 r.setEstado(EXECUCAO);
 
-                if (rdao.save(r) != null) {
+                rdao.save(r);
 
-                } else {
+                /* -------------------------------------------------------------------- */
+                /* Envio de email */
+                Email email = new Email();
+                email.setSubject("Requisição analisada e aceita.");
+                email.setTo(r.getUsuarioId().getEmail());
+                String conteudo = "Sua requisição " + "\"" + r.getDescricao() + "\", foi aceita pelo técnico " + r.getTecnicoId().getNome()
+                        + ". Aguarde pelo contato do profissional para a resolução do problema/dificuldade em questão.\n\nSuporte CCE UEL.\n\n"
+                        + "Atenção: esse e-mail é gerado automaticamente, não é necessária resposta.";
+                email.setContent(conteudo);
+                Email.sendEmail(email);
 
-                }
-
+                /* -------------------------------------------------------------------- */
                 //mensagem de resposta
                 break;
         }
