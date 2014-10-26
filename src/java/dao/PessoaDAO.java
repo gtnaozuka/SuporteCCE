@@ -17,6 +17,7 @@ public class PessoaDAO {
     private static final String allQuery = "SELECT * FROM pessoa";
     private static final String listByTypeQuery = "SELECT * FROM pessoa WHERE tipo = :tipo;";
     private static final String authenticateQuery = "SELECT * FROM pessoa WHERE matricula_chapa = :matricula_chapa;";
+    private static final String readByEmailQuery = "SELECT * FROM pessoa WHERE email = :email;";
 
     public PessoaDAO() {
         em = JPAUtil.initConnection();
@@ -60,6 +61,12 @@ public class PessoaDAO {
         }
 
         return p_tupla;
+    }
+
+    public Pessoa readByEmail(String email) {
+        Query q = em.createQuery(readByEmailQuery);
+        q.setParameter("email", email);
+        return (Pessoa) q.getSingleResult();
     }
 
     public void verifyPassword(Pessoa pessoa) throws SecurityException {

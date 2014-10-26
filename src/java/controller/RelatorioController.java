@@ -1,9 +1,14 @@
 package controller;
 
 import dao.PessoaDAO;
+import dao.RequisicaoDAO;
 import entity.Pessoa;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,11 +37,23 @@ public class RelatorioController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
             case "/relatorio":
-                /*request.getParameter("tecnico");
-                 request.getParameter("data_inicio");
-                 request.getParameter("data_termino");
-                 //Gerar relatorio
-                 //Pensar depois... Provavelmente enviar os dados gráficos via json.*/
+                String opcao = request.getParameter("tecnico");
+                DateFormat df = DateFormat.getDateInstance();
+                request.getParameter("data_inicio");
+                request.getParameter("data_termino");
+                RequisicaoDAO rdao = new RequisicaoDAO();
+                try {
+                    if (opcao.equals("all")) { //definir o que deve ser retornado
+                        rdao.listByTime(df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
+                    } else {
+                        rdao.listByTechnicalAndTime(Integer.parseInt(opcao), df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(RelatorioController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //Gerar relatorio
+                //Pensar depois... Provavelmente enviar os dados gráficos via json.
                 break;
         }
     }

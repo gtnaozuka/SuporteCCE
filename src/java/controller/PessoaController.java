@@ -3,8 +3,11 @@ package controller;
 import com.google.gson.Gson;
 import dao.PessoaDAO;
 import dao.RequisicaoDAO;
+import entity.Email;
 import entity.Pessoa;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +26,8 @@ import javax.servlet.http.HttpSession;
     "/tecnico/update",
     "/tecnico/adm_delete",
     "/tecnico/adm_update",
-    "/pessoa/delete"})
+    "/pessoa/delete"
+})
 public class PessoaController extends HttpServlet {
 
     public static final int USUARIO = 1;
@@ -36,7 +40,7 @@ public class PessoaController extends HttpServlet {
         HttpSession session = request.getSession(false);
         switch (request.getServletPath()) {
             case "":
-                if (session == null) {
+                if (session == null || session.getAttribute("pessoa") == null) {
                     dispatcher = request.getRequestDispatcher("/index.jsp");
                     dispatcher.forward(request, response);
                 } else {
@@ -170,16 +174,36 @@ public class PessoaController extends HttpServlet {
                 }
                 break;
             case "/pessoa/forgot_password":
-                /*request.getParameter("email");
-                 //Valida os roles.
-
-                 //Se o email existe
-                 request.setAttribute("sucesso", "Email enviado com sucesso!");
-                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
-
-                 //Se o email nao existe
-                 request.setAttribute("erro", SQLException.getMessage());
-                 dispatcher = request.getRequestDispatcher("/forgot_password.jsp");*/
+                
+                String email = request.getParameter("email");
+                PessoaDAO pdao = new PessoaDAO();
+                Pessoa pessoa = pdao.readByEmail(email);
+                if(pessoa != null) {
+                    //Se o email existe
+                    String newPassword = resetPassword();
+                    pessoa.setSenha(newPassword);
+                    pdao.save(pessoa, false); //altera senha
+                    
+                    /* -------------------------------------------------------------------- */
+                    /* Envio de email */
+                    
+                        Email email1 = new Email();
+                        email1.setSubject("Alteração de senha");
+                        email1.setTo(email);
+                        String conteudo = "Você esqueceu sua senha e requisitou uma nova. Acesse o sistema utilizando a combinação:\n"
+                                + newPassword + "\n\n Atenção! Mensagem gerada automaticamente. Não é necessária resposta.";
+                        email1.setContent(conteudo);
+                        Email.sendEmail(email1);
+                    
+                    /* -------------------------------------------------------------------- */
+                    
+                    request.setAttribute("sucesso", "Email enviado com sucesso!");
+                    dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                } else {
+                    //Se o email nao existe
+                    request.setAttribute("erro", "E-mail fornecido não encontrado na base.");
+                    dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                }
                 break;
             case "/pessoa/update_password":
                 p = getSessionPerson(request);
@@ -317,4 +341,10 @@ public class PessoaController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("pessoa", pessoa);
     }
+
+    private String resetPassword() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(64, random).toString(32);
+    }
+
 }
