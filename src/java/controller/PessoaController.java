@@ -199,10 +199,12 @@ public class PessoaController extends HttpServlet {
                         
                     request.setAttribute("sucesso", "Email enviado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                    dispatcher.forward(request, response);
                 } else {
                     //Se o email nao existe
                     request.setAttribute("erro", "E-mail fornecido não encontrado na base.");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
+                    dispatcher.forward(request, response);
                 }
                 break;
             case "/pessoa/update_password":
