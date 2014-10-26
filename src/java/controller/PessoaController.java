@@ -196,7 +196,7 @@ public class PessoaController extends HttpServlet {
                         Email.sendEmail(email1);
                     
                     /* -------------------------------------------------------------------- */
-                    
+                        
                     request.setAttribute("sucesso", "Email enviado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                 } else {
