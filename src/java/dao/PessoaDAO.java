@@ -24,7 +24,7 @@ public class PessoaDAO {
         em = JPAUtil.initConnection();
     }
 
-    public Pessoa save(Pessoa pessoa, boolean isMD5) {
+    public Pessoa save(Pessoa pessoa, boolean isMD5) throws PersistenceException {
         em.getTransaction().begin();
         if (!isMD5) {
             pessoa.setSenha(stringToMD5(pessoa.getSenha()));

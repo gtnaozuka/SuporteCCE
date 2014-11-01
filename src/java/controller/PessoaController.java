@@ -165,11 +165,12 @@ public class PessoaController extends HttpServlet {
                 p.setDepartamento(request.getParameter("departamento"));
                 p.setEmail(request.getParameter("email"));
 
-                if (pessoaDAO.save(p, false) != null) {
+                try {
+                    pessoaDAO.save(p, false);
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
@@ -211,17 +212,10 @@ public class PessoaController extends HttpServlet {
                     pessoaDAO.verifyPassword(p);
                     if (request.getParameter("nova_senha").equals(request.getParameter("confirm_senha"))) {
                         p.setSenha(request.getParameter("nova_senha"));
-                        p = pessoaDAO.save(p, false);
-                        if (p != null) {
-                            setSessionPerson(request, p);
-                            request.setAttribute("sucesso", "Senha alterada com sucesso!");
-                            dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
-                            dispatcher.forward(request, response);
-                        } else {
-                            request.setAttribute("erro", "Erro ao salvar.");
-                            dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
-                            dispatcher.forward(request, response);
-                        }
+                        setSessionPerson(request, pessoaDAO.save(p, false));
+                        request.setAttribute("sucesso", "Senha alterada com sucesso!");
+                        dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
+                        dispatcher.forward(request, response);
                     } else {
                         request.setAttribute("erro", "Nova senha e confirmação de senha não coincidem.");
                         dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
@@ -242,12 +236,11 @@ public class PessoaController extends HttpServlet {
                 p.setEmail(request.getParameter("email"));
                 p.setTipo(USUARIO);
 
-                p = pessoaDAO.save(p, false);
-                if (p != null) {
-                    setSessionPerson(request, p);
+                try {
+                    setSessionPerson(request, pessoaDAO.save(p, false));
                     dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
                     dispatcher = request.getRequestDispatcher("/view/usuario/create.jsp");
                     dispatcher.forward(request, response);
@@ -260,13 +253,12 @@ public class PessoaController extends HttpServlet {
                 p.setDepartamento(request.getParameter("departamento"));
                 p.setEmail(request.getParameter("email"));
 
-                p = pessoaDAO.save(p, true);
-                if (p != null) {
-                    setSessionPerson(request, p);
+                try {
+                    setSessionPerson(request, pessoaDAO.save(p, true));
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
                     dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
                     dispatcher.forward(request, response);
@@ -281,12 +273,12 @@ public class PessoaController extends HttpServlet {
                 p.setEmail(request.getParameter("email"));
                 p.setTipo(TECNICO);
 
-                p = pessoaDAO.save(p, false);
-                if (p != null) {
+                try {
+                    pessoaDAO.save(p, false);
                     request.setAttribute("sucesso", "Cadastro efetuado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
                     dispatcher.forward(request, response);
@@ -299,13 +291,12 @@ public class PessoaController extends HttpServlet {
                 p.setDepartamento(request.getParameter("departamento"));
                 p.setEmail(request.getParameter("email"));
 
-                p = pessoaDAO.save(p, true);
-                if (p != null) {
-                    setSessionPerson(request, p);
+                try {
+                    setSessionPerson(request, pessoaDAO.save(p, true));
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
                     dispatcher.forward(request, response);

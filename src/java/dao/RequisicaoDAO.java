@@ -5,6 +5,7 @@ import entity.Requisicao;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import util.JPAUtil;
 
@@ -21,7 +22,7 @@ public class RequisicaoDAO {
         em = JPAUtil.initConnection();
     }
 
-    public Requisicao save(Requisicao requisicao) {
+    public Requisicao save(Requisicao requisicao) throws PersistenceException {
         em.getTransaction().begin();
         Requisicao r = em.merge(requisicao);
         em.getTransaction().commit();
