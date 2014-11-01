@@ -9,8 +9,8 @@
                 Deseja realmente excluir esse técnico?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 <a id="a_tecnicoAdmDelete"><button type="button" class="btn btn-uel">Confirmar</button></a>
+                <button type="button" class="btn btn-default modal-btn-uel" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

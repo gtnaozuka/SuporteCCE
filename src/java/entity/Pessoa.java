@@ -1,5 +1,6 @@
 package entity;
 
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,6 +37,7 @@ public class Pessoa implements Serializable {
     private String senha;
     @Basic(optional = false)
     @Column(name = "nome")
+    @Expose
     private String nome;
     @Column(name = "departamento")
     private String departamento;

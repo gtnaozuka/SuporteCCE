@@ -1,5 +1,6 @@
 package entity;
 
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -31,24 +32,31 @@ public class Requisicao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @Expose
     private Integer id;
     @Basic(optional = false)
     @Column(name = "tipo")
+    @Expose
     private String tipo;
     @Basic(optional = false)
     @Column(name = "localizacao")
+    @Expose
     private String localizacao;
     @Column(name = "fuel")
+    @Expose
     private Integer fuel;
     @Basic(optional = false)
     @Column(name = "descricao")
+    @Expose
     private String descricao;
     @Basic(optional = false)
     @Column(name = "estado")
+    @Expose
     private int estado;
     @Basic(optional = false)
     @Column(name = "data_criacao")
     @Temporal(TemporalType.TIMESTAMP)
+    @Expose
     private Date dataCriacao;
     @Column(name = "prioridade")
     private Integer prioridade;
@@ -59,6 +67,7 @@ public class Requisicao implements Serializable {
     private Pessoa tecnicoId;
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @Expose
     private Pessoa usuarioId;
 
     public Requisicao() {

@@ -33,7 +33,7 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <table class="table table-striped table-hover table-uel">
+                <table class="table table-striped table-hover table-uel" style="width: 40%">
                     <thead>
                         <tr>
                             <th class="text-center">Chapa funcional</th>
@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="t" items="${tecnicosList}">
-                            <tr>
+                            <tr class="text-center">
                                 <td><c:out value="${t.matriculaChapa}"/></td>
                                 <td><c:out value="${t.nome}"/></td>
                                 <td><c:out value="${t.email}"/></td>

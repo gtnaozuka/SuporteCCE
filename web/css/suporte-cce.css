@@ -14,7 +14,7 @@
 
 .form-uel {
     margin: 0 auto;
-    width: 25%;
+    width: 30%;
 }
 
 .btn-uel {
@@ -36,9 +36,17 @@
     text-decoration: underline;
 }
 
+.modal-btn-uel {
+    color: #67b168;
+}
+
+.modal-btn-uel:hover {
+    color: #449d44;
+}
+
 .table-uel {
     margin: 0 auto;
-    width: 35%;
+    width: 55%;
 }
 
 .nav-uel {
@@ -54,4 +62,12 @@
 .navbar-nav .open>a:hover,
 .navbar-nav .open>a:focus {
     background-color: #449d44;
+}
+
+.nav-tabs>li>a {
+    color: #67b168;
+}
+
+.nav-tabs>li>a:hover {
+    color: #449d44;
 }

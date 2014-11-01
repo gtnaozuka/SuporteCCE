@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${pendentesList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
@@ -73,7 +73,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${execucaoList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
@@ -97,7 +97,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${esperaList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
@@ -121,7 +121,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${concluidosList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>

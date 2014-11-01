@@ -35,10 +35,8 @@
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        <div class="text-center">
                             <button type="submit" class="btn btn-uel">Salvar</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        </div>
+                            <button type="button" class="btn btn-default modal-btn-uel" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </form>

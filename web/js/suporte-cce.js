@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.dropdown-menu li').click(function (e) {
+    $('.input-group .dropdown-menu li').click(function (e) {
         e.preventDefault();
         var selected = $(this).text();
         $('.category').val(selected);
@@ -31,11 +31,11 @@ $(document).ready(function () {
     $('.btn_requisicaoAccept').click(function() {
         $.get($(this).data('href'), function(data) {
             var requisicao = JSON.parse(data);
-            $('#reqRemetente').html(requisicao.usuario_id.matriculaChapa);
+            $('#reqRemetente').html(requisicao.usuarioId.nome);
             $('#reqTipo').html(requisicao.tipo);
             $('#reqLocalizacao').html(requisicao.localizacao);
             $('#reqFuel').html(requisicao.fuel);
-            $('#reqDataCriacao').html(requisicao.data_criacao);
+            $('#reqDataCriacao').html(requisicao.dataCriacao);
             $('#reqDescricao').html(requisicao.descricao);
             $('#inputId').val(requisicao.id);
             $('#requisicaoAccept').modal('show');

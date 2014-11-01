@@ -48,11 +48,12 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${pendentesList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
@@ -77,11 +78,12 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${execucaoList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
@@ -106,11 +108,12 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${esperaList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
@@ -139,7 +142,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="r" items="${concluidosList}">
-                                    <tr>
+                                    <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>

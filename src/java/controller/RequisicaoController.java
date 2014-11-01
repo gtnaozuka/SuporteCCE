@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dao.RequisicaoDAO;
 import entity.Email;
 import entity.Pessoa;
@@ -74,7 +75,8 @@ public class RequisicaoController extends HttpServlet {
                 rdao = new RequisicaoDAO();
                 r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
 
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").excludeFieldsWithoutExposeAnnotation().create();
+                response.setCharacterEncoding("utf-8");
                 response.getWriter().write(gson.toJson(r));
                 break;
         }
