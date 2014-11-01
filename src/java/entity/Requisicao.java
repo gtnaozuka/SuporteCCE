@@ -19,7 +19,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "requisicao")
 @NamedQueries({
-    @NamedQuery(name = "Requisicao.findAll", query = "SELECT r FROM Requisicao r")})
+    @NamedQuery(name = "Requisicao.findAll", query = "SELECT r FROM Requisicao r"),
+    @NamedQuery(name = "Requisicao.listByStateAndUserQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado AND r.usuarioId = :usuario_id"),
+    @NamedQuery(name = "Requisicao.listByStateQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado"),
+    @NamedQuery(name = "Requisicao.requestsByTechnicalAndTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.tecnicoId = :tecnico_id AND r.dataCriacao BETWEEN :data1 AND :data2"),
+    @NamedQuery(name = "Requisicao.requestsByTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2"),
+})
 public class Requisicao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

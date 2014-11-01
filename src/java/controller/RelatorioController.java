@@ -37,16 +37,16 @@ public class RelatorioController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
             case "/relatorio":
-                String opcao = request.getParameter("tecnico");
+                String tecnico_id = request.getParameter("tecnico");
                 DateFormat df = DateFormat.getDateInstance();
-                request.getParameter("data_inicio");
-                request.getParameter("data_termino");
-                RequisicaoDAO rdao = new RequisicaoDAO();
+
+                PessoaDAO pDAO = new PessoaDAO();
+                RequisicaoDAO rDAO = new RequisicaoDAO();
                 try {
-                    if (opcao.equals("all")) { //definir o que deve ser retornado
-                        rdao.listByTime(df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
+                    if (tecnico_id.equals("")) { //definir o que deve ser retornado
+                        rDAO.listByTime(df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
                     } else {
-                        rdao.listByTechnicalAndTime(Integer.parseInt(opcao), df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
+                        rDAO.listByTechnicalAndTime(pDAO.read(Integer.parseInt(tecnico_id)), df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));
                     }
                 } catch (ParseException ex) {
                     Logger.getLogger(RelatorioController.class.getName()).log(Level.SEVERE, null, ex);

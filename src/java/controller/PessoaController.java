@@ -8,6 +8,7 @@ import entity.Pessoa;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import javax.persistence.PersistenceException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,8 @@ import javax.servlet.http.HttpSession;
     "/tecnico/update",
     "/tecnico/adm_delete",
     "/tecnico/adm_update",
-    "/pessoa/delete"
+    "/pessoa/delete",
+    "/logout"
 })
 public class PessoaController extends HttpServlet {
 
@@ -48,10 +50,10 @@ public class PessoaController extends HttpServlet {
                     RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
                     PessoaDAO pessoaDAO = new PessoaDAO();
                     if (p.getTipo() == USUARIO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p.getId()));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p.getId()));
-                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p.getId()));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p.getId()));
+                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
+                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
                         dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == TECNICO) {
@@ -131,10 +133,10 @@ public class PessoaController extends HttpServlet {
                     setSessionPerson(request, p);
 
                     if (p.getTipo() == USUARIO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p.getId()));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p.getId()));
-                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p.getId()));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p.getId()));
+                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
+                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
+                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
+                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
                         dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == TECNICO) {
@@ -174,34 +176,28 @@ public class PessoaController extends HttpServlet {
                 }
                 break;
             case "/pessoa/forgot_password":
-                
                 String email = request.getParameter("email");
-                PessoaDAO pdao = new PessoaDAO();
-                Pessoa pessoa = pdao.readByEmail(email);
-                if(pessoa != null) {
-                    //Se o email existe
+                p = pessoaDAO.readByEmail(email);
+                if (p != null) {
                     String newPassword = resetPassword();
-                    pessoa.setSenha(newPassword);
-                    pdao.save(pessoa, false); //altera senha
-                    
+                    p.setSenha(newPassword);
+                    pessoaDAO.save(p, false); //altera senha
+
                     /* -------------------------------------------------------------------- */
                     /* Envio de email */
-                    
-                        Email email1 = new Email();
-                        email1.setSubject("Alteração de senha");
-                        email1.setTo(email);
-                        String conteudo = "Você esqueceu sua senha e requisitou uma nova. Acesse o sistema utilizando a combinação:\n"
-                                + newPassword + "\n\n Atenção! Mensagem gerada automaticamente. Não é necessária resposta.";
-                        email1.setContent(conteudo);
-                        Email.sendEmail(email1);
-                    
+                    Email e = new Email();
+                    e.setSubject("Alteração de senha");
+                    e.setTo(email);
+                    String conteudo = "Você esqueceu sua senha e requisitou uma nova. Acesse o sistema utilizando a combinação:\n"
+                            + newPassword + "\n\n Atenção! Mensagem gerada automaticamente. Não é necessária resposta.";
+                    e.setContent(conteudo);
+                    Email.sendEmail(e);
+
                     /* -------------------------------------------------------------------- */
-                        
                     request.setAttribute("sucesso", "Email enviado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                     dispatcher.forward(request, response);
                 } else {
-                    //Se o email nao existe
                     request.setAttribute("erro", "E-mail fornecido não encontrado na base.");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                     dispatcher.forward(request, response);

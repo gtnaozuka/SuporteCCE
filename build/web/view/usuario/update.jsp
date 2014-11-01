@@ -35,7 +35,7 @@
                 <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/usuario/update" method="POST">
                     <div class="form-group">
                         <label for="inputMatricula">Matrícula</label>
-                        <input type="text" class="form-control" id="inputMatricula" placeholder="Insira seu número de matrícula" name="matricula" required="true" maxlength="20" pattern="[0-9]{6,20}" value="${sessionScope.pessoa.matricula_chapa}">
+                        <input type="text" class="form-control" id="inputMatricula" placeholder="Insira seu número de matrícula" name="matricula" required="true" maxlength="20" pattern="[0-9]{6,20}" value="${sessionScope.pessoa.matriculaChapa}">
                         <span class="help-block text-right">Mínimo 6 dígitos.</span>
                     </div>
                     <div class="form-group">

@@ -81,7 +81,8 @@ public class RequisicaoController extends HttpServlet {
                 r.setUsuarioId(PessoaController.getSessionPerson(request));
                 r.setTipo(request.getParameter("tipo"));
                 r.setLocalizacao(request.getParameter("local"));
-                r.setFuel(Integer.parseInt(request.getParameter("fuel")));
+                if (!request.getParameter("fuel").equals(""))
+                    r.setFuel(Integer.parseInt(request.getParameter("fuel")));
                 r.setDescricao(request.getParameter("descricao"));
                 r.setEstado(PENDENTE);
                 r.setDataCriacao(new Date()); //hora atual

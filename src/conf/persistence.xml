@@ -6,11 +6,15 @@
         <class>entity.Pessoa</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-54-83-204-104.compute-1.amazonaws.com:5432/d4plci7kotim4p?username=ioajcpeuewpujs&amp;password=IvHGFQGkmX8W7ccmNUzgLngPXD&amp;ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
-            <property name="hibernate.connection.driver" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="ioajcpeuewpujs"/>
-            <property name="hibernate.connection.password" value="IvHGFQGkmX8W7ccmNUzgLngPXD"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:6543/suporteCCE"/>
+            <property name="javax.persistence.jdbc.password" value="gtn123"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+      
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 </persistence>
