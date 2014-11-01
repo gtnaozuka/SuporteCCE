@@ -46,7 +46,16 @@
 
 .table-uel {
     margin: 0 auto;
-    width: 55%;
+    width: 60%;
+    table-layout: fixed;
+}
+
+.table-uel td {
+    word-wrap: break-word;
+}
+
+.modal-body h5 {
+    word-wrap: break-word;
 }
 
 .nav-uel {

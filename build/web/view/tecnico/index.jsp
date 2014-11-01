@@ -39,7 +39,7 @@
                             <th class="text-center">Chapa funcional</th>
                             <th class="text-center">Nome</th>
                             <th class="text-center">Email</th>
-                            <th class="text-center" colspan='2'>Ação</th>
+                            <th class="text-center" colspan='2' style="width: 25%">Ação</th>
                         </tr>
                     </thead>
                     <tbody>

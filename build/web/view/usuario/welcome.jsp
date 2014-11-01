@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${empty sessionScope.pessoa}">
     <c:redirect context="${pageContext.servletContext.contextPath}" url="/"/>
 </c:if>
@@ -56,7 +57,14 @@
                                     <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
@@ -86,7 +94,14 @@
                                     <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
@@ -116,7 +131,14 @@
                                     <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
@@ -145,7 +167,14 @@
                                     <tr class="text-center">
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                     </tr>
                                 </c:forEach>

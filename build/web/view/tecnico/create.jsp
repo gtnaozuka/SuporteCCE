@@ -44,15 +44,15 @@
                     </div>
                     <div class="form-group">
                         <label for="inputNome">Nome</label>
-                        <input type="text" class="form-control" id="inputNome" placeholder="Insira seu nome" name="nome" required="true" maxlength="20">
+                        <input type="text" class="form-control" id="inputNome" placeholder="Insira seu nome" name="nome" required="true" maxlength="40">
                     </div>
                     <div class="form-group">
                         <label for="inputDepartamento">Departamento (opcional)</label>
-                        <input type="text" class="form-control" id="inputDepartamento" placeholder="Insira seu departamento (opcional)" name="departamento" required="true" maxlength="20">
+                        <input type="text" class="form-control" id="inputDepartamento" placeholder="Insira seu departamento (opcional)" name="departamento" required="true" maxlength="30">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
-                        <input type="text" class="form-control" id="inputEmail" placeholder="Insira seu e-mail" name="email" required="true" maxlength="20">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Insira seu e-mail" name="email" required="true" maxlength="40">
                     </div>
                     <div class="form-group">
                         <div class="text-center">

@@ -37,15 +37,15 @@
                         <label for="inputTipo" class="control-label">Tipo de requisição</label>
                         <div class="controls col-sm-offset-1">
                             <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="suporte" checked>
+                                <input type="radio" name="tipo" id="inputTipo" value="Suporte" checked>
                                 Suporte
                             </label>
                             <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="manutencao">
+                                <input type="radio" name="tipo" id="inputTipo" value="Manutenção">
                                 Manutenção
                             </label>
                             <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="outros">
+                                <input type="radio" name="tipo" id="inputTipo" value="Outros">
                                 Outros
                             </label>
                         </div>
@@ -54,23 +54,23 @@
                         <label for="inputLocal" class="control-label">Local</label>
                         <div class="controls col-sm-offset-1">
                             <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="computacao" checked>
+                                <input type="radio" name="local" id="inputLocal" value="Computação" checked>
                                 Departamento de Computação
                             </label>
                             <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="estatistica">
+                                <input type="radio" name="local" id="inputLocal" value="Estatística">
                                 Departamento de Estatística
                             </label>
                             <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="fisica">
+                                <input type="radio" name="local" id="inputLocal" value="Física">
                                 Departamento de Física
                             </label>
                             <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="geografia">
+                                <input type="radio" name="local" id="inputLocal" value="Geografia">
                                 Departamento de Geografia
                             </label>
                             <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="quimica">
+                                <input type="radio" name="local" id="inputLocal" value="Química">
                                 Departamento de Química
                             </label>
                         </div>

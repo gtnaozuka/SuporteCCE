@@ -43,9 +43,9 @@
                                 <div class="input-group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione uma prioridade <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Baixa</a></li>
-                                        <li><a href="#">Média</a></li>
-                                        <li><a href="#">Alta</a></li>
+                                        <li data-id="1"><a href="#">Baixa</a></li>
+                                        <li data-id="2"><a href="#">Média</a></li>
+                                        <li data-id="3"><a href="#">Alta</a></li>
                                     </ul>
                                     <input type="hidden" class="form-control category" id="inputPrioridade" name="prioridade" required="true">
                                 </div>

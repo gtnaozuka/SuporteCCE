@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dao.PessoaDAO;
 import dao.RequisicaoDAO;
 import entity.Email;
@@ -8,6 +9,7 @@ import entity.Pessoa;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -99,6 +101,7 @@ public class PessoaController extends HttpServlet {
                 Pessoa p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
                 pessoaDAO.delete(p);
                 request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
+                request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
                 dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                 dispatcher.forward(request, response);
                 break;
@@ -106,7 +109,8 @@ public class PessoaController extends HttpServlet {
                 pessoaDAO = new PessoaDAO();
                 p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
 
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").excludeFieldsWithoutExposeAnnotation().create();
+                response.setCharacterEncoding("utf-8");
                 response.getWriter().write(gson.toJson(p));
                 break;
             case "/logout":
@@ -168,18 +172,20 @@ public class PessoaController extends HttpServlet {
                 try {
                     pessoaDAO.save(p, false);
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
+                    request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
                 } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
+                    request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
                 }
                 break;
             case "/pessoa/forgot_password":
                 String email = request.getParameter("email");
-                p = pessoaDAO.readByEmail(email);
-                if (p != null) {
+                try {
+                    p = pessoaDAO.readByEmail(email);
                     String newPassword = resetPassword();
                     p.setSenha(newPassword);
                     pessoaDAO.save(p, false); //altera senha
@@ -198,7 +204,7 @@ public class PessoaController extends HttpServlet {
                     request.setAttribute("sucesso", "Email enviado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                     dispatcher.forward(request, response);
-                } else {
+                } catch (NoResultException ex) {
                     request.setAttribute("erro", "E-mail fornecido não encontrado na base.");
                     dispatcher = request.getRequestDispatcher("/forgot_password.jsp");
                     dispatcher.forward(request, response);

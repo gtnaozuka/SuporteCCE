@@ -1,9 +1,8 @@
 $(document).ready(function () {
     $('.input-group .dropdown-menu li').click(function (e) {
         e.preventDefault();
-        var selected = $(this).text();
-        $('.category').val(selected);
-        $('.input-group button').html(selected + ' <span class="caret"></span>');
+        $('.category').val($(this).data('id'));
+        $('.input-group button').html($(this).text() + ' <span class="caret"></span>');
     });
     
     $('.btn_tecnicoAdmUpdate').click(function() {

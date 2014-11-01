@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${empty sessionScope.pessoa}">
     <c:redirect context="${pageContext.servletContext.contextPath}" url="/"/>
 </c:if>
@@ -21,6 +22,18 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h2 class="text-center">Requisições</h2>
+                <c:if test="${not empty sucesso}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${sucesso}"/></strong>
+                    </div>
+                </c:if>
+                <c:if test="${not empty erro}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong><c:out value="${erro}"/></strong>
+                    </div>
+                </c:if>
                 <ul class="nav nav-tabs nav-uel" role="tablist" id="tabs">
                     <li id="tabPendentes" class='active'><a href="#Pendentes" role="tab" data-toggle="tab">Pendentes</a></li>
                     <li id="tabExecucao"><a href="#Execucao" role="tab" data-toggle="tab">Em execução</a></li>
@@ -46,7 +59,14 @@
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                         <td>
                                             <a class="btn_requisicaoAccept" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/accept?requisicao_id=${r.id}">
@@ -77,7 +97,14 @@
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                     </tr>
                                 </c:forEach>
@@ -101,7 +128,14 @@
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                     </tr>
                                 </c:forEach>
@@ -125,7 +159,14 @@
                                         <td><c:out value="${r.usuarioId.nome}"/></td>
                                         <td><c:out value="${r.tipo}"/></td>
                                         <td><c:out value="${r.localizacao}"/></td>
-                                        <td><c:out value="${r.descricao}"/></td>
+                                        <c:choose>
+                                            <c:when test="${fn:length(r.descricao) <= 35}">
+                                                <td><c:out value="${r.descricao}"/></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><c:out value="${fn:substring(r.descricao, 0, 32)}..."/></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
                                     </tr>
                                 </c:forEach>

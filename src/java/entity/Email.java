@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 public class Email {
 
     private static final String from = "uelccesuporte@gmail.com";
-    private static final String password = ""; //Não tão fácil...
+    private static final String password = "suportecceuel"; //Não tão fácil...
     private String to;
     private String subject;
     private String content;

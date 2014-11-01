@@ -33,7 +33,7 @@
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um técnico <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <c:forEach var="t" items="${tecnicosList}">
-                                    <li><a href="#"><c:out value="${t.id}"/></a></li>
+                                    <li data-id="${t.id}"><a href="#"><c:out value="${t.nome}"/></a></li>
                                 </c:forEach>
                             </ul>
                             <input type="hidden" class="form-control category" id="inputTecnico" name="tecnico" required="true">

@@ -43,15 +43,15 @@
                     </div>
                     <div class="form-group">
                         <label for="inputNome">Nome</label>
-                        <input type="text" class="form-control" id="inputNome" placeholder="Insira seu nome" name="nome" required="true" maxlength="20" value="${sessionScope.pessoa.nome}">
+                        <input type="text" class="form-control" id="inputNome" placeholder="Insira seu nome" name="nome" required="true" maxlength="40" value="${sessionScope.pessoa.nome}">
                     </div>
                     <div class="form-group">
                         <label for="inputDepartamento">Departamento</label>
-                        <input type="text" class="form-control" id="inputDepartamento" placeholder="Insira seu departamento" name="departamento" required="true" maxlength="20" value="${sessionScope.pessoa.departamento}">
+                        <input type="text" class="form-control" id="inputDepartamento" placeholder="Insira seu departamento" name="departamento" required="true" maxlength="30" value="${sessionScope.pessoa.departamento}">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
-                        <input type="text" class="form-control" id="inputEmail" placeholder="Insira seu e-mail" name="email" required="true" maxlength="20" value="${sessionScope.pessoa.email}">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Insira seu e-mail" name="email" required="true" maxlength="40" value="${sessionScope.pessoa.email}">
                     </div>
                     <div class="form-group">
                         <div class="text-center">

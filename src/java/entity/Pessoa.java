@@ -28,9 +28,11 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @Expose
     private Integer id;
     @Basic(optional = false)
     @Column(name = "matricula_chapa")
+    @Expose
     private String matriculaChapa;
     @Basic(optional = false)
     @Column(name = "senha")
@@ -40,9 +42,11 @@ public class Pessoa implements Serializable {
     @Expose
     private String nome;
     @Column(name = "departamento")
+    @Expose
     private String departamento;
     @Basic(optional = false)
     @Column(name = "email")
+    @Expose
     private String email;
     @Basic(optional = false)
     @Column(name = "tipo")

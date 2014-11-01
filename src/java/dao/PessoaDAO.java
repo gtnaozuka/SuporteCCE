@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import util.JPAUtil;
@@ -65,18 +66,18 @@ public class PessoaDAO {
     public Pessoa authenticate(Pessoa pessoa) throws SecurityException {
         Query q = em.createNamedQuery("Pessoa.authenticate");
         q.setParameter("matricula_chapa", pessoa.getMatriculaChapa());
-        Pessoa p_tupla = (Pessoa) q.getSingleResult();
-
-        if (p_tupla != null) {
+        
+        Pessoa p_tupla;
+        try {
+            p_tupla = (Pessoa) q.getSingleResult();
             verifyPassword(pessoa.getSenha(), p_tupla.getSenha());
-        } else {
+        } catch (NoResultException ex) {
             throw new SecurityException("Matrícula ou chapa incorreta.");
         }
-
         return p_tupla;
     }
 
-    public Pessoa readByEmail(String email) {
+    public Pessoa readByEmail(String email) throws NoResultException {
         Query q = em.createNamedQuery("Pessoa.readByEmailQuery");
         q.setParameter("email", email);
         return (Pessoa) q.getSingleResult();
