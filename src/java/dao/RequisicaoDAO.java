@@ -13,19 +13,26 @@ public class RequisicaoDAO {
 
     private final EntityManager em;
     /*private static final String allQuery = "SELECT * FROM requisicao";
-    private static final String listByStateAndUserQuery = "SELECT * FROM requisicao WHERE estado = :estado AND usuario_id = :usuario_id;";
-    private static final String listByStateQuery = "SELECT * FROM requisicao WHERE estado = :estado;";
-    private static final String requestsByTechnicalAndTimeQuery = "SELECT * FROM requisicao WHERE tecnico_id = :tecnico_id AND data_criacao BETWEEN :data1 AND :data2;";
-    private static final String requestsByTimeQuery = "SELECT * FROM requisicao WHERE data_criacao BETWEEN :data1 AND :data2;";*/
+     private static final String listByStateAndUserQuery = "SELECT * FROM requisicao WHERE estado = :estado AND usuario_id = :usuario_id;";
+     private static final String listByStateQuery = "SELECT * FROM requisicao WHERE estado = :estado;";
+     private static final String requestsByTechnicalAndTimeQuery = "SELECT * FROM requisicao WHERE tecnico_id = :tecnico_id AND data_criacao BETWEEN :data1 AND :data2;";
+     private static final String requestsByTimeQuery = "SELECT * FROM requisicao WHERE data_criacao BETWEEN :data1 AND :data2;";*/
 
     public RequisicaoDAO() {
         em = JPAUtil.initConnection();
     }
 
     public Requisicao save(Requisicao requisicao) throws PersistenceException {
-        em.getTransaction().begin();
-        Requisicao r = em.merge(requisicao);
-        em.getTransaction().commit();
+        Requisicao r = null;
+        try {
+            em.getTransaction().begin();
+            r = em.merge(requisicao);
+            em.getTransaction().commit();
+        } catch (PersistenceException ex) {
+            em.getTransaction().rollback();
+            em.clear();
+            throw ex;
+        }
         return r;
     }
 
@@ -56,7 +63,7 @@ public class RequisicaoDAO {
         q.setParameter("estado", state);
         return q.getResultList();
     }
-    
+
     public List<Requisicao> listByTechnicalAndTime(Pessoa technicalId, Date data1, Date data2) {
         Query q = em.createNamedQuery("Requisicao.requestsByTechnicalAndTimeQuery");
         q.setParameter("tecnico_id", technicalId);
@@ -64,7 +71,7 @@ public class RequisicaoDAO {
         q.setParameter("data2", data2);
         return q.getResultList();
     }
-    
+
     public List<Requisicao> listByTime(Date data1, Date data2) {
         Query q = em.createNamedQuery("Requisicao.requestsByTimeQuery");
         q.setParameter("data1", data1);

@@ -15,6 +15,8 @@
     </head>
     <body class="body-uel">
         <%@include file="/view/include/navbarAdmin.jsp" %>
+        <%@include file="/view/include/tecnicoAdmDelete.jsp" %>
+        <%@include file="/view/include/tecnicoAdmUpdate.jsp" %>
 
         <div class="container-fluid">
             <div class="jumbotron">
@@ -69,5 +71,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap.min.js" ></script>
+        <script src="${pageContext.servletContext.contextPath}/js/suporte-cce.js" ></script>
     </body>
 </html>

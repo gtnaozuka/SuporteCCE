@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.get($(this).data('href'), function(data) {
             var tecnico = JSON.parse(data);
             $("#inputId").val(tecnico.id);
-            $("#inputChapa").val(tecnico.matricula_chapa);
+            $("#inputChapa").val(tecnico.matriculaChapa);
             $("#inputNome").val(tecnico.nome);
             $("#inputDepartamento").val(tecnico.departamento);
             $("#inputEmail").val(tecnico.email);
@@ -24,14 +24,14 @@ $(document).ready(function () {
     });
     
     $('.btn_requisicaoDelete').click(function() {
-        $('#a_requisicaoDelete').attr('href'. $(this).data('href'));
+        $('#a_requisicaoDelete').attr('href', $(this).data('href'));
         $('#requisicaoDelete').modal('show');
     });
     
     $('.btn_requisicaoAccept').click(function() {
         $.get($(this).data('href'), function(data) {
             var requisicao = JSON.parse(data);
-            $('#reqRemetente').html(requisicao.usuario_id.matricula_chapa);
+            $('#reqRemetente').html(requisicao.usuario_id.matriculaChapa);
             $('#reqTipo').html(requisicao.tipo);
             $('#reqLocalizacao').html(requisicao.localizacao);
             $('#reqFuel').html(requisicao.fuel);

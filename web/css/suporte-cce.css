@@ -44,3 +44,14 @@
 .nav-uel {
     margin-bottom: 2.5%;
 }
+
+.navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-nav>li>a:hover,
+.navbar-nav .open>a,
+.navbar-nav .open>a:hover,
+.navbar-nav .open>a:focus {
+    background-color: #449d44;
+}

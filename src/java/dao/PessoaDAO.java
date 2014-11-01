@@ -16,21 +16,28 @@ public class PessoaDAO {
 
     private final EntityManager em;
     /*private static final String allQuery = "SELECT * FROM pessoa";
-    private static final String listByTypeQuery = "SELECT * FROM pessoa WHERE tipo = :tipo;";
-    private static final String authenticateQuery = "SELECT p FROM pessoa p WHERE p.matricula_chapa = :matricula_chapa";
-    private static final String readByEmailQuery = "SELECT * FROM pessoa WHERE email = :email;";*/
+     private static final String listByTypeQuery = "SELECT * FROM pessoa WHERE tipo = :tipo;";
+     private static final String authenticateQuery = "SELECT p FROM pessoa p WHERE p.matricula_chapa = :matricula_chapa";
+     private static final String readByEmailQuery = "SELECT * FROM pessoa WHERE email = :email;";*/
 
     public PessoaDAO() {
         em = JPAUtil.initConnection();
     }
 
     public Pessoa save(Pessoa pessoa, boolean isMD5) throws PersistenceException {
-        em.getTransaction().begin();
-        if (!isMD5) {
-            pessoa.setSenha(stringToMD5(pessoa.getSenha()));
+        Pessoa p = null;
+        try {
+            em.getTransaction().begin();
+            if (!isMD5) {
+                pessoa.setSenha(stringToMD5(pessoa.getSenha()));
+            }
+            p = em.merge(pessoa);
+            em.getTransaction().commit();
+        } catch (PersistenceException ex) {
+            em.getTransaction().rollback();
+            em.clear();
+            throw ex;
         }
-        Pessoa p = em.merge(pessoa);
-        em.getTransaction().commit();
         return p;
     }
 

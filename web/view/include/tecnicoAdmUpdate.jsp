@@ -5,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Edição de técnico</h4>
             </div>
-            <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/tecnico/adm_update" method="POST">
-                <div class="modal-body">
+            <form role="form" action="${pageContext.servletContext.contextPath}/tecnico/adm_update" method="POST">
+                <div class="modal-body" style="margin: 0 auto; width: 55%">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="inputId" name="id">
                     </div>

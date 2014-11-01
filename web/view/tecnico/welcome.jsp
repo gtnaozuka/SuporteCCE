@@ -16,6 +16,7 @@
     <body class="body-uel">
         <%@include file="/view/include/deleteAccount.jsp" %>        
         <%@include file="/view/include/navbarTecnico.jsp"%>
+        <%@include file="/view/include/requisicaoAccept.jsp"%>
 
         <div class="container-fluid">
             <div class="jumbotron">
@@ -36,6 +37,7 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +48,13 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoAccept" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/accept?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -70,13 +79,6 @@
                                         <td><c:out value="${r.localizacao}"/></td>
                                         <td><c:out value="${r.descricao}"/></td>
                                         <td><c:out value="${r.dataCriacao}"/></td>
-                                        <td>
-                                            <a class="btn_requisicaoAccept" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/accept?requisicao_id=${t.id}">
-                                                <button type="button" class="btn btn-default btn-small">
-                                                    <span class="glyphicon glyphicon-ok"></span>
-                                                </button>
-                                            </a>
-                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -136,5 +138,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap.min.js" ></script>
+        <script src="${pageContext.servletContext.contextPath}/js/suporte-cce.js" ></script>
     </body>
 </html>
