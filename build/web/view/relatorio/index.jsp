@@ -29,7 +29,7 @@
                 <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/relatorio" method="POST">
                     <div class="form-group">
                         <label for="inputTecnico">Técnico</label>
-                        <div class="input-group">
+                        <div class="input-group inputGroupTecnico">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um técnico <span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <c:forEach var="t" items="${tecnicosList}">

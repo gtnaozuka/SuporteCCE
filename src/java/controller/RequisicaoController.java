@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "RequisicaoController", urlPatterns = {
     "/requisicao/create",
     "/requisicao/accept",
-    "/requisicao/delete"})
+    "/requisicao/delete",
+    "/requisicao/update"})
 public class RequisicaoController extends HttpServlet {
 
     public static final Integer PENDENTE = 1;
@@ -37,6 +38,7 @@ public class RequisicaoController extends HttpServlet {
                 break;
             case "/requisicao/delete":
             case "/requisicao/accept":
+            case "/requisicao/update":
                 RequisicaoDAO rdao = new RequisicaoDAO();
                 Requisicao r = rdao.read(Integer.parseInt(request.getParameter("requisicao_id")));
 
@@ -133,6 +135,44 @@ public class RequisicaoController extends HttpServlet {
 
                     /* -------------------------------------------------------------------- */
                     request.setAttribute("sucesso", "Requisição aceita com sucesso!");
+                    request.setAttribute("pendentesList", rdao.listByState(RequisicaoController.PENDENTE));
+                    request.setAttribute("execucaoList", rdao.listByState(RequisicaoController.EXECUCAO));
+                    request.setAttribute("esperaList", rdao.listByState(RequisicaoController.ESPERA));
+                    request.setAttribute("concluidosList", rdao.listByState(RequisicaoController.CONCLUIDO));
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
+                    dispatcher.forward(request, response);
+                } catch (PersistenceException ex) {
+                    request.setAttribute("erro", "Erro ao salvar.");
+                    request.setAttribute("pendentesList", rdao.listByState(RequisicaoController.PENDENTE));
+                    request.setAttribute("execucaoList", rdao.listByState(RequisicaoController.EXECUCAO));
+                    request.setAttribute("esperaList", rdao.listByState(RequisicaoController.ESPERA));
+                    request.setAttribute("concluidosList", rdao.listByState(RequisicaoController.CONCLUIDO));
+                    dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
+                    dispatcher.forward(request, response);
+                }
+                break;
+            case "/requisicao/update":
+                r = rdao.read(Integer.parseInt(request.getParameter("id")));
+                r.setPrioridade(Integer.parseInt(request.getParameter("prioridade")));
+                r.setObservacao(request.getParameter("observacao"));
+                r.setEstado(Integer.parseInt(request.getParameter("estado")));
+
+                try {
+                    rdao.save(r);
+
+                    /* -------------------------------------------------------------------- */
+                    /* Envio de email */
+                    /*Email email = new Email();
+                    email.setSubject("Requisição analisada e aceita.");
+                    email.setTo(r.getUsuarioId().getEmail());
+                    String conteudo = "Sua requisição " + "\"" + r.getDescricao() + "\", foi aceita pelo técnico " + r.getTecnicoId().getNome()
+                            + ". Aguarde pelo contato do profissional para a resolução do problema/dificuldade em questão.\n\nSuporte CCE UEL.\n\n"
+                            + "Atenção: esse e-mail é gerado automaticamente, não é necessária resposta.";
+                    email.setContent(conteudo);
+                    Email.sendEmail(email);*/
+
+                    /* -------------------------------------------------------------------- */
+                    request.setAttribute("sucesso", "Requisição salva com sucesso!");
                     request.setAttribute("pendentesList", rdao.listByState(RequisicaoController.PENDENTE));
                     request.setAttribute("execucaoList", rdao.listByState(RequisicaoController.EXECUCAO));
                     request.setAttribute("esperaList", rdao.listByState(RequisicaoController.ESPERA));

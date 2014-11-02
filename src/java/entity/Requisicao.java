@@ -21,8 +21,8 @@ import javax.persistence.TemporalType;
 @Table(name = "requisicao")
 @NamedQueries({
     @NamedQuery(name = "Requisicao.findAll", query = "SELECT r FROM Requisicao r"),
-    @NamedQuery(name = "Requisicao.listByStateAndUserQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado AND r.usuarioId = :usuario_id"),
-    @NamedQuery(name = "Requisicao.listByStateQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado"),
+    @NamedQuery(name = "Requisicao.listByStateAndUserQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado AND r.usuarioId = :usuario_id ORDER BY r.dataCriacao DESC"),
+    @NamedQuery(name = "Requisicao.listByStateQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado ORDER BY r.dataCriacao DESC"),
     @NamedQuery(name = "Requisicao.requestsByTechnicalAndTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.tecnicoId = :tecnico_id AND r.dataCriacao BETWEEN :data1 AND :data2"),
     @NamedQuery(name = "Requisicao.requestsByTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2"),
 })
@@ -59,8 +59,10 @@ public class Requisicao implements Serializable {
     @Expose
     private Date dataCriacao;
     @Column(name = "prioridade")
+    @Expose
     private Integer prioridade;
     @Column(name = "observacao")
+    @Expose
     private String observacao;
     @JoinColumn(name = "tecnico_id", referencedColumnName = "id")
     @ManyToOne

@@ -33,46 +33,30 @@
                     </div>
                 </c:if>
                 <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/requisicao/create" method="POST">
-                    <div class="control-group">
-                        <label for="inputTipo" class="control-label">Tipo de requisição</label>
-                        <div class="controls col-sm-offset-1">
-                            <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="Suporte" checked>
-                                Suporte
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="Manutenção">
-                                Manutenção
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="tipo" id="inputTipo" value="Outros">
-                                Outros
-                            </label>
+                    <div class="form-group">
+                        <label for="inputTipo">Tipo de requisição</label>
+                        <div class="input-group inputGroupTipo">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um tipo de requisição <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Suporte</a></li>
+                                <li><a href="#">Manutenção</a></li>
+                                <li><a href="#">Outros</a></li>
+                            </ul>
+                            <input type="hidden" class="form-control category" id="inputTipo" name="tipo" required="true">
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label for="inputLocal" class="control-label">Local</label>
-                        <div class="controls col-sm-offset-1">
-                            <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="Computação" checked>
-                                Departamento de Computação
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="Estatística">
-                                Departamento de Estatística
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="Física">
-                                Departamento de Física
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="Geografia">
-                                Departamento de Geografia
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="local" id="inputLocal" value="Química">
-                                Departamento de Química
-                            </label>
+                    <div class="form-group">
+                        <label for="inputLocal">Local</label>
+                        <div class="input-group inputGroupLocal">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um local <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Departamento de Computação</a></li>
+                                <li><a href="#">Departamento de Estatística</a></li>
+                                <li><a href="#">Departamento de Física</a></li>
+                                <li><a href="#">Departamento de Geografia</a></li>
+                                <li><a href="#">Departamento de Química</a></li>
+                            </ul>
+                            <input type="hidden" class="form-control category" id="inputLocal" name="local" required="true">
                         </div>
                     </div>
                     <div class="form-group">

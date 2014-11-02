@@ -51,7 +51,7 @@
                                 <td>
                                     <a class="btn_tecnicoAdmUpdate" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/tecnico/adm_update?tecnico_id=${t.id}">
                                         <button type="button" class="btn btn-default btn-small">
-                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                     </a>
                                 </td>

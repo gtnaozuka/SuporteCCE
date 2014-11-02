@@ -46,8 +46,18 @@
                         <input type="text" class="form-control" id="inputNome" placeholder="Insira seu nome" name="nome" required="true" maxlength="40" value="${sessionScope.pessoa.nome}">
                     </div>
                     <div class="form-group">
-                        <label for="inputDepartamento">Departamento (opcional)</label>
-                        <input type="text" class="form-control" id="inputDepartamento" placeholder="Insira seu departamento (opcional)" name="departamento" required="true" maxlength="30" value="${sessionScope.pessoa.departamento}">
+                        <label for="inputLocal">Departamento (opcional)</label>
+                        <div class="input-group inputGroupLocal">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">${sessionScope.pessoa.departamento} <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Departamento de Computação</a></li>
+                                <li><a href="#">Departamento de Estatística</a></li>
+                                <li><a href="#">Departamento de Física</a></li>
+                                <li><a href="#">Departamento de Geografia</a></li>
+                                <li><a href="#">Departamento de Química</a></li>
+                            </ul>
+                            <input type="hidden" class="form-control category" id="inputLocal" name="departamento" value="${sessionScope.pessoa.departamento}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>

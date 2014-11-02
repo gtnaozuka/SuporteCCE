@@ -152,7 +152,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="Concluído">
+                    <div class="tab-pane fade" id="Concluido">
                         <table class="table table-striped table-hover table-uel">
                             <thead>
                                 <tr>

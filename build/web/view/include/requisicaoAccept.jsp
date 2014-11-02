@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputPrioridade">Prioridade</label>
-                                <div class="input-group">
+                                <div class="input-group inputGroupPrioridade">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione uma prioridade <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         <li data-id="1"><a href="#">Baixa</a></li>

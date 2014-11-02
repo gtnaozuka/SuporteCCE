@@ -18,6 +18,7 @@
         <%@include file="/view/include/deleteAccount.jsp" %>        
         <%@include file="/view/include/navbarTecnico.jsp"%>
         <%@include file="/view/include/requisicaoAccept.jsp"%>
+        <%@include file="/view/include/requisicaoUpdate.jsp"%>
 
         <div class="container-fluid">
             <div class="jumbotron">
@@ -89,6 +90,7 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,6 +108,13 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoUpdate" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/update?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -120,6 +129,7 @@
                                     <th class="text-center">Local</th>
                                     <th class="text-center">Descrição</th>
                                     <th class="text-center">Data</th>
+                                    <th class="text-center">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -137,12 +147,19 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <td><c:out value="${r.dataCriacao}"/></td>
+                                        <td>
+                                            <a class="btn_requisicaoUpdate" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/update?requisicao_id=${r.id}">
+                                                <button type="button" class="btn btn-default btn-small">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="Concluído">
+                    <div class="tab-pane fade" id="Concluido">
                         <table class="table table-striped table-hover table-uel">
                             <thead>
                                 <tr>
