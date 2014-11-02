@@ -69,7 +69,7 @@
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
                                                 <button type="button" class="btn btn-default btn-small">
-                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                    <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </a>
                                         </td>
@@ -106,7 +106,7 @@
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
                                                 <button type="button" class="btn btn-default btn-small">
-                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                    <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </a>
                                         </td>
@@ -143,7 +143,7 @@
                                         <td>
                                             <a class="btn_requisicaoDelete" data-toggle="modal" data-href="${pageContext.servletContext.contextPath}/requisicao/delete?requisicao_id=${r.id}">
                                                 <button type="button" class="btn btn-default btn-small">
-                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                    <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </a>
                                         </td>

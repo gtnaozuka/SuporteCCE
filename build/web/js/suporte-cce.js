@@ -23,8 +23,16 @@ $(document).ready(function () {
     });
     
     $('.btn_requisicaoDelete').click(function() {
-        $('#a_requisicaoDelete').attr('href', $(this).data('href'));
-        $('#requisicaoDelete').modal('show');
+        $.get($(this).data('href'), function(data) {
+            var requisicao = JSON.parse(data);
+            $('#reqTipo').html(requisicao.tipo);
+            $('#reqLocalizacao').html(requisicao.localizacao);
+            $('#reqFuel').html(requisicao.fuel);
+            $('#reqDataCriacao').html(requisicao.dataCriacao);
+            $('#reqDescricao').html(requisicao.descricao);
+            $('#inputId').val(requisicao.id);
+            $('#requisicaoDelete').modal('show');
+        });
     });
     
     $('.btn_requisicaoAccept').click(function() {
