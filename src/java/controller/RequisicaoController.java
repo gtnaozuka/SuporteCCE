@@ -27,6 +27,9 @@ public class RequisicaoController extends HttpServlet {
     public static final Integer EXECUCAO = 2;
     public static final Integer ESPERA = 3;
     public static final Integer CONCLUIDO = 4;
+    public static final Integer BAIXA = 1;
+    public static final Integer MEDIA = 2;
+    public static final Integer ALTA = 3;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

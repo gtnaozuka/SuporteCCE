@@ -1,10 +1,4 @@
 $(document).ready(function () {
-    $('.inputGroupTecnico li').click(function (e) {
-        e.preventDefault();
-        $('.inputGroupTecnico input').val($(this).data('id'));
-        $('.inputGroupTecnico button').html($(this).text() + ' <span class="caret"></span>');
-    });
-
     $('.inputGroupPrioridade li').click(function (e) {
         e.preventDefault();
         $('.inputGroupPrioridade input').val($(this).data('id'));
@@ -22,6 +16,13 @@ $(document).ready(function () {
         var selected = $(this).text();
         $('.inputGroupTipo input').val(selected);
         $('.inputGroupTipo button').html(selected + ' <span class="caret"></span>');
+    });
+
+    $('.inputGroupGrafico li').click(function (e) {
+        e.preventDefault();
+        var selected = $(this).text();
+        $('.inputGroupGrafico input').val(selected);
+        $('.inputGroupGrafico button').html(selected + ' <span class="caret"></span>');
     });
 
     $('.inputGroupLocal li').click(function (e) {
@@ -106,4 +107,63 @@ $(document).ready(function () {
             $('#requisicaoUpdate').modal('show');
         });
     });
+
+    $(".formRelatorio").submit(function (e) {
+        e.preventDefault();
+        var dataPost = {
+            grafico: $(".formRelatorio #inputGrafico").val(),
+            data_inicio: $(".formRelatorio #inputDataInicio").val(),
+            data_termino: $(".formRelatorio #inputDataTermino").val()
+        };
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            dataType: 'json',
+            data: dataPost,
+            success: function (data) {
+                createChart(data);
+            },
+            cache: false
+        });
+        $("#chart").modal('show');
+    });
+
+    function createChart(data) {
+        var options = {
+            chart: {
+                renderTo: 'container',
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {},
+            subtitle: {},
+            tooltip: {
+                pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                    type: 'pie',
+                    name: 'Quantidade'
+                }]
+        };
+
+        options.title.text = data.title;
+        options.subtitle.text = data.subtitle;
+        options.series[0].data = data.data;
+        var chart = new Highcharts.Chart(options);
+    }
 });

@@ -23,8 +23,15 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Requisicao.findAll", query = "SELECT r FROM Requisicao r"),
     @NamedQuery(name = "Requisicao.listByStateAndUserQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado AND r.usuarioId = :usuario_id ORDER BY r.dataCriacao DESC"),
     @NamedQuery(name = "Requisicao.listByStateQuery", query = "SELECT r FROM Requisicao r WHERE r.estado = :estado ORDER BY r.dataCriacao DESC"),
-    @NamedQuery(name = "Requisicao.requestsByTechnicalAndTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.tecnicoId = :tecnico_id AND r.dataCriacao BETWEEN :data1 AND :data2"),
-    @NamedQuery(name = "Requisicao.requestsByTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2"),
+    /*@NamedQuery(name = "Requisicao.requestsByTechnicalAndTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.tecnicoId = :tecnico_id AND r.dataCriacao BETWEEN :data1 AND :data2"),
+    @NamedQuery(name = "Requisicao.requestsByTimeQuery", query = "SELECT r FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2")*/
+    @NamedQuery(name = "Requisicao.listByUserIdAndTime", query = "SELECT p.nome, COUNT(r) FROM Requisicao r JOIN r.usuarioId p WHERE r.dataCriacao BETWEEN :data1 AND :data2 GROUP BY r.usuarioId, p.nome ORDER BY COUNT(r) DESC"),
+    @NamedQuery(name = "Requisicao.listByTypeAndTime", query = "SELECT r.tipo, COUNT(r) FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2 GROUP BY r.tipo ORDER BY r.tipo"),
+    @NamedQuery(name = "Requisicao.listByLocateAndTime", query = "SELECT r.localizacao, COUNT(r) FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2 GROUP BY r.localizacao ORDER BY r.localizacao"),
+    @NamedQuery(name = "Requisicao.listByFuelAndTime", query = "SELECT r.fuel, COUNT(r) FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2 AND r.fuel IS NOT NULL GROUP BY r.fuel ORDER BY COUNT(r) DESC"),
+    @NamedQuery(name = "Requisicao.listByStateAndTime", query = "SELECT r.estado, COUNT(r) FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2 GROUP BY r.estado ORDER BY r.estado"),
+    @NamedQuery(name = "Requisicao.listByPriorityAndTime", query = "SELECT r.prioridade, COUNT(r) FROM Requisicao r WHERE r.dataCriacao BETWEEN :data1 AND :data2 AND r.prioridade IS NOT NULL GROUP BY r.prioridade ORDER BY r.prioridade"),
+    @NamedQuery(name = "Requisicao.listByTechnicalAndTime", query = "SELECT p.nome, COUNT(r) FROM Requisicao r JOIN r.tecnicoId p WHERE r.dataCriacao BETWEEN :data1 AND :data2 GROUP BY r.tecnicoId, p.nome ORDER BY COUNT(r) DESC")
 })
 public class Requisicao implements Serializable {
     private static final long serialVersionUID = 1L;

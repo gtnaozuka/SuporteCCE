@@ -16,6 +16,7 @@
     <body class="body-uel">
         <%@include file="/view/include/deleteAccount.jsp" %>
         <%@include file="/view/include/navbarTecnico.jsp" %>
+        <%@include file="/view/include/chart.jsp" %>
 
         <div class="container-fluid">
             <div class="jumbotron">
@@ -26,8 +27,8 @@
                         <strong><c:out value="${erro}"/></strong>
                     </div>
                 </c:if>
-                <form class="form-uel" role="form" action="${pageContext.servletContext.contextPath}/relatorio" method="POST">
-                    <div class="form-group">
+                <form class="form-uel formRelatorio" role="form" action="${pageContext.servletContext.contextPath}/relatorio" method="POST">
+                    <%--<div class="form-group">
                         <label for="inputTecnico">Técnico</label>
                         <div class="input-group inputGroupTecnico">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um técnico <span class="caret"></span></button>
@@ -37,6 +38,22 @@
                                 </c:forEach>
                             </ul>
                             <input type="hidden" class="form-control category" id="inputTecnico" name="tecnico" required="true">
+                        </div>
+                    </div>--%>
+                    <div class="form-group">
+                        <label for="inputGrafico">Tipo de gráfico de requisições</label>
+                        <div class="input-group inputGroupGrafico">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Selecione um tipo de gráfico de requisições <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Por remetente</a></li>
+                                <li><a href="#">Por tipo</a></li>
+                                <li><a href="#">Por localização</a></li>
+                                <li><a href="#">Por fuel</a></li>
+                                <li><a href="#">Por estado</a></li>
+                                <li><a href="#">Por prioridade</a></li>
+                                <li><a href="#">Por técnico</a></li>
+                            </ul>
+                            <input type="hidden" class="form-control category" id="inputGrafico" name="grafico" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -60,5 +77,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap.min.js" ></script>
         <script src="${pageContext.servletContext.contextPath}/js/suporte-cce.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
     </body>
 </html>

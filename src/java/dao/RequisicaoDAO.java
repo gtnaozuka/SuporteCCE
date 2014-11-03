@@ -64,7 +64,7 @@ public class RequisicaoDAO {
         return q.getResultList();
     }
 
-    public List<Requisicao> listByTechnicalAndTime(Pessoa technicalId, Date data1, Date data2) {
+    /*public List<Requisicao> listByTechnicalAndTime(Pessoa technicalId, Date data1, Date data2) {
         Query q = em.createNamedQuery("Requisicao.requestsByTechnicalAndTimeQuery");
         q.setParameter("tecnico_id", technicalId);
         q.setParameter("data1", data1);
@@ -74,6 +74,40 @@ public class RequisicaoDAO {
 
     public List<Requisicao> listByTime(Date data1, Date data2) {
         Query q = em.createNamedQuery("Requisicao.requestsByTimeQuery");
+        q.setParameter("data1", data1);
+        q.setParameter("data2", data2);
+        return q.getResultList();
+    }*/
+
+    @SuppressWarnings("")
+    public List<Object[]> listByChartAndTime(String grafico, Date data1, Date data2) {
+        Query q = null;
+        switch (grafico) {
+            case "Por remetente":
+                q = em.createNamedQuery("Requisicao.listByUserIdAndTime");
+                q.setMaxResults(10);
+                break;
+            case "Por tipo":
+                q = em.createNamedQuery("Requisicao.listByTypeAndTime");
+                break;
+            case "Por localização":
+                q = em.createNamedQuery("Requisicao.listByLocateAndTime");
+                break;
+            case "Por fuel":
+                q = em.createNamedQuery("Requisicao.listByFuelAndTime");
+                q.setMaxResults(10);
+                break;
+            case "Por estado":
+                q = em.createNamedQuery("Requisicao.listByStateAndTime");
+                break;
+            case "Por prioridade":
+                q = em.createNamedQuery("Requisicao.listByPriorityAndTime");
+                break;
+            case "Por técnico":
+                q = em.createNamedQuery("Requisicao.listByTechnicalAndTime");
+                q.setMaxResults(10);
+                break;
+        }
         q.setParameter("data1", data1);
         q.setParameter("data2", data2);
         return q.getResultList();
