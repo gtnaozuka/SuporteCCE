@@ -42,6 +42,8 @@ public class PessoaController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
+        PessoaDAO pDAO = new PessoaDAO();
+        RequisicaoDAO rDAO = new RequisicaoDAO();
         switch (request.getServletPath()) {
             case "":
                 if (session == null || session.getAttribute("pessoa") == null) {
@@ -49,24 +51,22 @@ public class PessoaController extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else {
                     Pessoa p = (Pessoa) session.getAttribute("pessoa");
-                    RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
-                    PessoaDAO pessoaDAO = new PessoaDAO();
                     if (p.getTipo() == USUARIO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
-                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
+                        request.setAttribute("pendentesList", rDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
+                        request.setAttribute("execucaoList", rDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
+                        request.setAttribute("esperaList", rDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
+                        request.setAttribute("concluidosList", rDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
                         dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == TECNICO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByState(RequisicaoController.PENDENTE));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByState(RequisicaoController.EXECUCAO));
-                        request.setAttribute("esperaList", requisicaoDAO.listByState(RequisicaoController.ESPERA));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByState(RequisicaoController.CONCLUIDO));
+                        request.setAttribute("pendentesList", rDAO.listByState(RequisicaoController.PENDENTE));
+                        request.setAttribute("execucaoList", rDAO.listByState(RequisicaoController.EXECUCAO));
+                        request.setAttribute("esperaList", rDAO.listByState(RequisicaoController.ESPERA));
+                        request.setAttribute("concluidosList", rDAO.listByState(RequisicaoController.CONCLUIDO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == ADMINISTRADOR) {
-                        request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                        request.setAttribute("tecnicosList", pDAO.listByType(TECNICO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                         dispatcher.forward(request, response);
                     }
@@ -97,17 +97,15 @@ public class PessoaController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
             case "/tecnico/adm_delete":
-                PessoaDAO pessoaDAO = new PessoaDAO();
-                Pessoa p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
-                pessoaDAO.delete(p);
+                Pessoa p = pDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
+                pDAO.delete(p);
                 request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
-                request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                request.setAttribute("tecnicosList", pDAO.listByType(TECNICO));
                 dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "/tecnico/adm_update":
-                pessoaDAO = new PessoaDAO();
-                p = pessoaDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
+                p = pDAO.read(Integer.parseInt(request.getParameter("tecnico_id")));
 
                 Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").excludeFieldsWithoutExposeAnnotation().create();
                 response.setCharacterEncoding("utf-8");
@@ -124,8 +122,8 @@ public class PessoaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher;
-        PessoaDAO pessoaDAO = new PessoaDAO();
-        RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
+        PessoaDAO pDAO = new PessoaDAO();
+        RequisicaoDAO rDAO = new RequisicaoDAO();
         switch (request.getServletPath()) {
             case "":
                 Pessoa p = new Pessoa();
@@ -133,25 +131,25 @@ public class PessoaController extends HttpServlet {
                 p.setSenha(request.getParameter("senha"));
 
                 try {
-                    p = pessoaDAO.authenticate(p);
+                    p = pDAO.authenticate(p);
                     setSessionPerson(request, p);
 
                     if (p.getTipo() == USUARIO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
-                        request.setAttribute("esperaList", requisicaoDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
+                        request.setAttribute("pendentesList", rDAO.listByStateAndUser(RequisicaoController.PENDENTE, p));
+                        request.setAttribute("execucaoList", rDAO.listByStateAndUser(RequisicaoController.EXECUCAO, p));
+                        request.setAttribute("esperaList", rDAO.listByStateAndUser(RequisicaoController.ESPERA, p));
+                        request.setAttribute("concluidosList", rDAO.listByStateAndUser(RequisicaoController.CONCLUIDO, p));
                         dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == TECNICO) {
-                        request.setAttribute("pendentesList", requisicaoDAO.listByState(RequisicaoController.PENDENTE));
-                        request.setAttribute("execucaoList", requisicaoDAO.listByState(RequisicaoController.EXECUCAO));
-                        request.setAttribute("esperaList", requisicaoDAO.listByState(RequisicaoController.ESPERA));
-                        request.setAttribute("concluidosList", requisicaoDAO.listByState(RequisicaoController.CONCLUIDO));
+                        request.setAttribute("pendentesList", rDAO.listByState(RequisicaoController.PENDENTE));
+                        request.setAttribute("execucaoList", rDAO.listByState(RequisicaoController.EXECUCAO));
+                        request.setAttribute("esperaList", rDAO.listByState(RequisicaoController.ESPERA));
+                        request.setAttribute("concluidosList", rDAO.listByState(RequisicaoController.CONCLUIDO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/welcome.jsp");
                         dispatcher.forward(request, response);
                     } else if (p.getTipo() == ADMINISTRADOR) {
-                        request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                        request.setAttribute("tecnicosList", pDAO.listByType(TECNICO));
                         dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                         dispatcher.forward(request, response);
                     }
@@ -162,7 +160,7 @@ public class PessoaController extends HttpServlet {
                 }
                 break;
             case "/tecnico/adm_update":
-                p = pessoaDAO.read(Integer.parseInt(request.getParameter("id")));
+                p = pDAO.read(Integer.parseInt(request.getParameter("id")));
                 p.setMatriculaChapa(request.getParameter("chapa"));
                 p.setSenha(request.getParameter("senha"));
                 p.setNome(request.getParameter("nome"));
@@ -170,14 +168,14 @@ public class PessoaController extends HttpServlet {
                 p.setEmail(request.getParameter("email"));
 
                 try {
-                    pessoaDAO.save(p, false);
+                    pDAO.save(p, false);
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
-                    request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                    request.setAttribute("tecnicosList", pDAO.listByType(TECNICO));
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
                 } catch (PersistenceException ex) {
                     request.setAttribute("erro", "Erro ao salvar.");
-                    request.setAttribute("tecnicosList", pessoaDAO.listByType(TECNICO));
+                    request.setAttribute("tecnicosList", pDAO.listByType(TECNICO));
                     dispatcher = request.getRequestDispatcher("/view/tecnico/index.jsp");
                     dispatcher.forward(request, response);
                 }
@@ -185,10 +183,10 @@ public class PessoaController extends HttpServlet {
             case "/pessoa/forgot_password":
                 String email = request.getParameter("email");
                 try {
-                    p = pessoaDAO.readByEmail(email);
+                    p = pDAO.readByEmail(email);
                     String newPassword = resetPassword();
                     p.setSenha(newPassword);
-                    pessoaDAO.save(p, false); //altera senha
+                    pDAO.save(p, false); //altera senha
 
                     /* -------------------------------------------------------------------- */
                     /* Envio de email */
@@ -215,10 +213,10 @@ public class PessoaController extends HttpServlet {
                 p.setSenha(request.getParameter("senha_atual"));
 
                 try {
-                    pessoaDAO.verifyPassword(p);
+                    pDAO.verifyPassword(p);
                     if (request.getParameter("nova_senha").equals(request.getParameter("confirm_senha"))) {
                         p.setSenha(request.getParameter("nova_senha"));
-                        setSessionPerson(request, pessoaDAO.save(p, false));
+                        setSessionPerson(request, pDAO.save(p, false));
                         request.setAttribute("sucesso", "Senha alterada com sucesso!");
                         dispatcher = request.getRequestDispatcher("/view/update_password.jsp");
                         dispatcher.forward(request, response);
@@ -243,7 +241,7 @@ public class PessoaController extends HttpServlet {
                 p.setTipo(USUARIO);
 
                 try {
-                    setSessionPerson(request, pessoaDAO.save(p, false));
+                    setSessionPerson(request, pDAO.save(p, false));
                     dispatcher = request.getRequestDispatcher("/view/usuario/welcome.jsp");
                     dispatcher.forward(request, response);
                 } catch (PersistenceException ex) {
@@ -260,7 +258,7 @@ public class PessoaController extends HttpServlet {
                 p.setEmail(request.getParameter("email"));
 
                 try {
-                    setSessionPerson(request, pessoaDAO.save(p, true));
+                    setSessionPerson(request, pDAO.save(p, true));
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/usuario/update.jsp");
                     dispatcher.forward(request, response);
@@ -280,7 +278,7 @@ public class PessoaController extends HttpServlet {
                 p.setTipo(TECNICO);
 
                 try {
-                    pessoaDAO.save(p, false);
+                    pDAO.save(p, false);
                     request.setAttribute("sucesso", "Cadastro efetuado com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/create.jsp");
                     dispatcher.forward(request, response);
@@ -298,7 +296,7 @@ public class PessoaController extends HttpServlet {
                 p.setEmail(request.getParameter("email"));
 
                 try {
-                    setSessionPerson(request, pessoaDAO.save(p, true));
+                    setSessionPerson(request, pDAO.save(p, true));
                     request.setAttribute("sucesso", "Alterações efetuadas com sucesso!");
                     dispatcher = request.getRequestDispatcher("/view/tecnico/update.jsp");
                     dispatcher.forward(request, response);
@@ -313,8 +311,8 @@ public class PessoaController extends HttpServlet {
                 p.setSenha(request.getParameter("senha_atual"));
 
                 try {
-                    pessoaDAO.verifyPassword(p);
-                    pessoaDAO.delete(p);
+                    pDAO.verifyPassword(p);
+                    pDAO.delete(p);
 
                     setSessionPerson(request, null);
                     request.setAttribute("sucesso", "Exclusão efetuada com sucesso!");
@@ -332,9 +330,9 @@ public class PessoaController extends HttpServlet {
         return (Pessoa) session.getAttribute("pessoa");
     }
 
-    private void setSessionPerson(HttpServletRequest request, Pessoa pessoa) {
+    private void setSessionPerson(HttpServletRequest request, Pessoa p) {
         HttpSession session = request.getSession();
-        session.setAttribute("pessoa", pessoa);
+        session.setAttribute("pessoa", p);
     }
 
     private String resetPassword() {

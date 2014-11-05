@@ -22,11 +22,10 @@ public class RequisicaoDAO {
         em = JPAUtil.initConnection();
     }
 
-    public Requisicao save(Requisicao requisicao) throws PersistenceException {
-        Requisicao r = null;
+    public Requisicao save(Requisicao r) throws PersistenceException {
         try {
             em.getTransaction().begin();
-            r = em.merge(requisicao);
+            r = em.merge(r);
             em.getTransaction().commit();
         } catch (PersistenceException ex) {
             em.getTransaction().rollback();
@@ -40,9 +39,9 @@ public class RequisicaoDAO {
         return em.find(Requisicao.class, id);
     }
 
-    public void delete(Requisicao requisicao) {
+    public void delete(Requisicao r) {
         em.getTransaction().begin();
-        em.remove(read(requisicao.getId()));
+        em.remove(read(r.getId()));
         em.getTransaction().commit();
     }
 

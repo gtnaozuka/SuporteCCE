@@ -36,14 +36,13 @@ public class RelatorioController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequisicaoDAO rDAO = new RequisicaoDAO();
         switch (request.getServletPath()) {
             case "/relatorio":
                 String grafico = request.getParameter("grafico");
                 String data_inicio = request.getParameter("data_inicio");
                 String data_termino = request.getParameter("data_termino");
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-                RequisicaoDAO rDAO = new RequisicaoDAO();
                 try {
                     /*if (tecnico_id.equals("")) { //definir o que deve ser retornado
                      rDAO.listByTime(df.parse(request.getParameter("data_inicio")), df.parse(request.getParameter("data_termino")));

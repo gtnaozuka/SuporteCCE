@@ -25,14 +25,13 @@ public class PessoaDAO {
         em = JPAUtil.initConnection();
     }
 
-    public Pessoa save(Pessoa pessoa, boolean isMD5) throws PersistenceException {
-        Pessoa p = null;
+    public Pessoa save(Pessoa p, boolean isMD5) throws PersistenceException {
         try {
             em.getTransaction().begin();
             if (!isMD5) {
-                pessoa.setSenha(stringToMD5(pessoa.getSenha()));
+                p.setSenha(stringToMD5(p.getSenha()));
             }
-            p = em.merge(pessoa);
+            p = em.merge(p);
             em.getTransaction().commit();
         } catch (PersistenceException ex) {
             em.getTransaction().rollback();
@@ -46,9 +45,9 @@ public class PessoaDAO {
         return em.find(Pessoa.class, id);
     }
 
-    public void delete(Pessoa pessoa) {
+    public void delete(Pessoa p) {
         em.getTransaction().begin();
-        em.remove(read(pessoa.getId()));
+        em.remove(read(p.getId()));
         em.getTransaction().commit();
     }
 
@@ -63,14 +62,14 @@ public class PessoaDAO {
         return q.getResultList();
     }
 
-    public Pessoa authenticate(Pessoa pessoa) throws SecurityException {
+    public Pessoa authenticate(Pessoa p) throws SecurityException {
         Query q = em.createNamedQuery("Pessoa.authenticate");
-        q.setParameter("matricula_chapa", pessoa.getMatriculaChapa());
+        q.setParameter("matricula_chapa", p.getMatriculaChapa());
         
         Pessoa p_tupla;
         try {
             p_tupla = (Pessoa) q.getSingleResult();
-            verifyPassword(pessoa.getSenha(), p_tupla.getSenha());
+            verifyPassword(p.getSenha(), p_tupla.getSenha());
         } catch (NoResultException ex) {
             throw new SecurityException("Matrícula ou chapa incorreta.");
         }
@@ -83,9 +82,9 @@ public class PessoaDAO {
         return (Pessoa) q.getSingleResult();
     }
 
-    public void verifyPassword(Pessoa pessoa) throws SecurityException {
-        Pessoa p_tupla = em.find(Pessoa.class, pessoa.getId());
-        verifyPassword(pessoa.getSenha(), p_tupla.getSenha());
+    public void verifyPassword(Pessoa p) throws SecurityException {
+        Pessoa p_tupla = em.find(Pessoa.class, p.getId());
+        verifyPassword(p.getSenha(), p_tupla.getSenha());
     }
 
     private void verifyPassword(String senha_form, String senha_tupla) throws SecurityException {
